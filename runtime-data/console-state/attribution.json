@@ -1,0 +1,211 @@
+{
+  "schema": "self-media-attribution.demo.v1",
+  "generated_at": "2026-08-07T00:00:00",
+  "grand_total_new_followers": 631,
+  "by_platform": [
+    {
+      "platform": "xhs",
+      "platform_name": "小红书",
+      "total_new_followers": 397
+    },
+    {
+      "platform": "douyin",
+      "platform_name": "抖音",
+      "total_new_followers": 13
+    },
+    {
+      "platform": "zhihu",
+      "platform_name": "知乎",
+      "total_new_followers": 1
+    },
+    {
+      "platform": "bili",
+      "platform_name": "B站",
+      "total_new_followers": 163
+    },
+    {
+      "platform": "wechat",
+      "platform_name": "公众号",
+      "total_new_followers": 57
+    }
+  ],
+  "by_type": [
+    {
+      "content_type": "教程",
+      "total_new_followers": 360,
+      "total_views": 82000
+    },
+    {
+      "content_type": "复盘",
+      "total_new_followers": 190,
+      "total_views": 54000
+    },
+    {
+      "content_type": "案例",
+      "total_new_followers": 81,
+      "total_views": 26000
+    }
+  ],
+  "top_contents": [
+    {
+      "content_id": "demo-001",
+      "content_title": "经营看板搭建方法 #1",
+      "platform": "douyin",
+      "platform_name": "抖音",
+      "content_type": "复盘",
+      "date": "2026-08-06",
+      "exposure": 11780,
+      "views": 8460,
+      "likes": 591,
+      "comments": 79,
+      "favorites": 257,
+      "shares": 36,
+      "new_followers": 79,
+      "content_url": ""
+    },
+    {
+      "content_id": "demo-002",
+      "content_title": "内容复盘模板 #2",
+      "platform": "zhihu",
+      "platform_name": "知乎",
+      "content_type": "案例",
+      "date": "2026-08-05",
+      "exposure": 11560,
+      "views": 8320,
+      "likes": 582,
+      "comments": 78,
+      "favorites": 254,
+      "shares": 37,
+      "new_followers": 78,
+      "content_url": ""
+    },
+    {
+      "content_id": "demo-003",
+      "content_title": "低成本自动化采集 #3",
+      "platform": "bili",
+      "platform_name": "B站",
+      "content_type": "教程",
+      "date": "2026-08-04",
+      "exposure": 11340,
+      "views": 8180,
+      "likes": 573,
+      "comments": 77,
+      "favorites": 251,
+      "shares": 38,
+      "new_followers": 77,
+      "content_url": ""
+    },
+    {
+      "content_id": "demo-004",
+      "content_title": "选题库管理流程 #4",
+      "platform": "wechat",
+      "platform_name": "公众号",
+      "content_type": "复盘",
+      "date": "2026-08-03",
+      "exposure": 11120,
+      "views": 8040,
+      "likes": 564,
+      "comments": 76,
+      "favorites": 248,
+      "shares": 39,
+      "new_followers": 76,
+      "content_url": ""
+    },
+    {
+      "content_id": "demo-005",
+      "content_title": "AI 数据分析入门 #5",
+      "platform": "xhs",
+      "platform_name": "小红书",
+      "content_type": "案例",
+      "date": "2026-08-02",
+      "exposure": 10900,
+      "views": 7900,
+      "likes": 555,
+      "comments": 75,
+      "favorites": 245,
+      "shares": 40,
+      "new_followers": 75,
+      "content_url": ""
+    },
+    {
+      "content_id": "demo-006",
+      "content_title": "经营看板搭建方法 #6",
+      "platform": "douyin",
+      "platform_name": "抖音",
+      "content_type": "教程",
+      "date": "2026-08-01",
+      "exposure": 10680,
+      "views": 7760,
+      "likes": 546,
+      "comments": 74,
+      "favorites": 242,
+      "shares": 41,
+      "new_followers": 74,
+      "content_url": ""
+    },
+    {
+      "content_id": "demo-007",
+      "content_title": "内容复盘模板 #7",
+      "platform": "zhihu",
+      "platform_name": "知乎",
+      "content_type": "复盘",
+      "date": "2026-07-31",
+      "exposure": 10460,
+      "views": 7620,
+      "likes": 537,
+      "comments": 73,
+      "favorites": 239,
+      "shares": 42,
+      "new_followers": 73,
+      "content_url": ""
+    },
+    {
+      "content_id": "demo-008",
+      "content_title": "低成本自动化采集 #8",
+      "platform": "bili",
+      "platform_name": "B站",
+      "content_type": "案例",
+      "date": "2026-07-30",
+      "exposure": 10240,
+      "views": 7480,
+      "likes": 528,
+      "comments": 72,
+      "favorites": 236,
+      "shares": 43,
+      "new_followers": 72,
+      "content_url": ""
+    },
+    {
+      "content_id": "demo-009",
+      "content_title": "选题库管理流程 #9",
+      "platform": "wechat",
+      "platform_name": "公众号",
+      "content_type": "教程",
+      "date": "2026-07-29",
+      "exposure": 10020,
+      "views": 7340,
+      "likes": 519,
+      "comments": 71,
+      "favorites": 233,
+      "shares": 44,
+      "new_followers": 71,
+      "content_url": ""
+    },
+    {
+      "content_id": "demo-010",
+      "content_title": "AI 数据分析入门 #10",
+      "platform": "xhs",
+      "platform_name": "小红书",
+      "content_type": "复盘",
+      "date": "2026-07-28",
+      "exposure": 9800,
+      "views": 7200,
+      "likes": 510,
+      "comments": 70,
+      "favorites": 230,
+      "shares": 45,
+      "new_followers": 70,
+      "content_url": ""
+    }
+  ]
+}

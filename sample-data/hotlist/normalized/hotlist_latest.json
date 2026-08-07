@@ -1,0 +1,22 @@
+{
+  "items": [
+    {
+      "title": "示例热榜：AI 报告自动化",
+      "platform": "xhs",
+      "platform_name": "小红书",
+      "keyword": "AI 报告",
+      "heat": "8.8w",
+      "url": "",
+      "source": "demo"
+    },
+    {
+      "title": "示例热榜：数据看板模板",
+      "platform": "bili",
+      "platform_name": "B站",
+      "keyword": "数据看板",
+      "heat": "5.1w",
+      "url": "",
+      "source": "demo"
+    }
+  ]
+}

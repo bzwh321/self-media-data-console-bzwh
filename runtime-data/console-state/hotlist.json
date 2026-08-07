@@ -1,0 +1,22 @@
+[
+  {
+    "id": "demo-hot-1",
+    "title": "AI 数据分析工具箱：从数据到看板",
+    "platform": "xhs",
+    "platform_name": "小红书",
+    "keyword": "数据分析",
+    "heat": "9.2w",
+    "status": "new",
+    "source": "demo"
+  },
+  {
+    "id": "demo-hot-2",
+    "title": "普通人如何做经营复盘",
+    "platform": "douyin",
+    "platform_name": "抖音",
+    "keyword": "经营复盘",
+    "heat": "6.8w",
+    "status": "new",
+    "source": "demo"
+  }
+]

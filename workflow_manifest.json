@@ -1,0 +1,16 @@
+{
+  "schema": "self-media-console-public.workflow.v1",
+  "name": "self-media-data-console-public",
+  "data_root": "sample-data/self-media",
+  "optional_integrations": [
+    "Trae data-processing",
+    "Trae business-ops-analysis",
+    "Trae Lark/Feishu",
+    "lark-cli"
+  ],
+  "outputs": [
+    "runtime-data/reports",
+    "runtime-data/screenshots",
+    "runtime-data/logs"
+  ]
+}

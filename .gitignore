@@ -1,0 +1,23 @@
+# local secrets
+config.json
+.env
+*.local
+
+# runtime outputs
+runtime-data/logs/
+runtime-data/reports/
+runtime-data/screenshots/
+runtime-data/_stage/
+*.log
+debug.log
+
+# dependencies / cache
+node_modules/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/

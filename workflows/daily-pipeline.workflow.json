@@ -1,0 +1,37 @@
+{
+  "schema": "daily-self-media-pipeline.public.v1",
+  "name": "每日自媒体数据中控台流水线（公开版）",
+  "owner_agent": "self-media-console-director",
+  "mode": "sample-data-first",
+  "stages": [
+    {
+      "id": "load_sample_data",
+      "name": "读取虚拟示例数据",
+      "command": "python scripts/daily_pipeline.py --stage report",
+      "required": true
+    },
+    {
+      "id": "build_workbench",
+      "name": "生成本地工作台页面",
+      "command": "python scripts/daily_pipeline.py --stage build-workbench",
+      "required": true
+    },
+    {
+      "id": "capture_screenshot",
+      "name": "截取工作台首页",
+      "command": "python scripts/daily_pipeline.py --stage screenshot",
+      "required": false
+    },
+    {
+      "id": "send_lark",
+      "name": "可选：发送消息和截图",
+      "command": "python scripts/daily_pipeline.py --stage send-lark",
+      "required": false
+    }
+  ],
+  "status_policy": {
+    "ready": "示例数据完整且校验通过",
+    "partial": "可选阶段失败，如截图或消息发送未配置",
+    "failed": "数据契约缺失或业务校验失败"
+  }
+}

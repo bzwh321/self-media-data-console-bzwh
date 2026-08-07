@@ -1,0 +1,14 @@
+{
+  "name": "self-media-data-console",
+  "version": "0.1.0",
+  "private": false,
+  "description": "A local self-media data dashboard demo with virtual data, skins, workflow docs, and Trae skills.",
+  "scripts": {
+    "start": "python scripts/console_server.py",
+    "report": "python scripts/daily_pipeline.py --stage report",
+    "screenshot": "python scripts/daily_pipeline.py --stage screenshot"
+  },
+  "devDependencies": {
+    "puppeteer": "^25.5.0"
+  }
+}

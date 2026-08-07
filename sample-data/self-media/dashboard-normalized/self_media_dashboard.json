@@ -1,0 +1,79 @@
+{
+  "schema": "self-media-dashboard.demo.v1",
+  "generatedAt": "2026-08-07T00:00:00",
+  "dateMin": "2026-07-09",
+  "dateMax": "2026-08-07",
+  "latestMonth": "2026-08",
+  "platforms": [
+    {
+      "id": "xhs",
+      "name": "小红书",
+      "fans": 46200,
+      "newFans": 397,
+      "revenue": 3813,
+      "posts": 8,
+      "play": 98000,
+      "interact": 1480,
+      "freshnessStatus": "ready",
+      "latestDailyDate": "2026-08-07",
+      "totalFollowersDate": "2026-08-07",
+      "freshnessIssues": []
+    },
+    {
+      "id": "douyin",
+      "name": "抖音",
+      "fans": 5400,
+      "newFans": 13,
+      "revenue": 2383,
+      "posts": 6,
+      "play": 56000,
+      "interact": 420,
+      "freshnessStatus": "ready",
+      "latestDailyDate": "2026-08-07",
+      "totalFollowersDate": "2026-08-07",
+      "freshnessIssues": []
+    },
+    {
+      "id": "zhihu",
+      "name": "知乎",
+      "fans": 25200,
+      "newFans": 1,
+      "revenue": 318,
+      "posts": 3,
+      "play": 18000,
+      "interact": 160,
+      "freshnessStatus": "ready",
+      "latestDailyDate": "2026-08-07",
+      "totalFollowersDate": "2026-08-07",
+      "freshnessIssues": []
+    },
+    {
+      "id": "bili",
+      "name": "B站",
+      "fans": 98400,
+      "newFans": 163,
+      "revenue": 953,
+      "posts": 4,
+      "play": 31600,
+      "interact": 210,
+      "freshnessStatus": "ready",
+      "latestDailyDate": "2026-08-07",
+      "totalFollowersDate": "2026-08-07",
+      "freshnessIssues": []
+    },
+    {
+      "id": "wechat",
+      "name": "公众号",
+      "fans": 9000,
+      "newFans": 57,
+      "revenue": 477,
+      "posts": 5,
+      "play": 7200,
+      "interact": 95,
+      "freshnessStatus": "ready",
+      "latestDailyDate": "2026-08-07",
+      "totalFollowersDate": "2026-08-07",
+      "freshnessIssues": []
+    }
+  ]
+}

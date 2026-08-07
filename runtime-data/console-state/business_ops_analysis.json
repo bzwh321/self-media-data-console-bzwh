@@ -1,0 +1,514 @@
+{
+  "schema": "self-media-business-ops-analysis.v1",
+  "generated_at": "2026-08-07T14:23:47+08:00",
+  "goals": {
+    "new_fans": 2000,
+    "revenue": 30000.0,
+    "revenue_mtd_target": {
+      "target_value": 30000.0
+    },
+    "profit_mtd_target": {
+      "target_value": 18000.0
+    }
+  },
+  "meta": {
+    "date_min": "2026-07-09",
+    "date_max": "2026-08-07",
+    "latest_month": "2026-08",
+    "days_passed_this_month": 7,
+    "days_remaining_this_month": 24
+  },
+  "revenue_analysis": {
+    "is_mock": true,
+    "mock_notice": "⚠️ 本经营数据（收入/成本/利润）为模拟展示数据，真实数据接入后将自动替换。",
+    "kpi": {
+      "total_revenue": 7944.0,
+      "total_cost": 3574.8,
+      "total_profit": 4369.2,
+      "profit_rate": 0.55,
+      "rev_mom": -0.3794,
+      "cost_mom": -0.3837,
+      "profit_mom": -0.3758,
+      "last_revenue": 12800.0,
+      "last_cost": 5800.0,
+      "last_profit": 7000.0
+    },
+    "by_platform": [
+      {
+        "platform": "xhs",
+        "platform_name": "小红书",
+        "revenue": 3813.12,
+        "cost": 1535.84,
+        "profit": 2277.2799999999997,
+        "profit_rate": 0.5972
+      },
+      {
+        "platform": "douyin",
+        "platform_name": "抖音",
+        "revenue": 2383.2,
+        "cost": 1218.08,
+        "profit": 1165.12,
+        "profit_rate": 0.4889
+      },
+      {
+        "platform": "bili",
+        "platform_name": "B站",
+        "revenue": 953.28,
+        "cost": 423.68,
+        "profit": 529.5999999999999,
+        "profit_rate": 0.5556
+      },
+      {
+        "platform": "wechat",
+        "platform_name": "公众号",
+        "revenue": 476.64,
+        "cost": 211.84,
+        "profit": 264.79999999999995,
+        "profit_rate": 0.5556
+      },
+      {
+        "platform": "zhihu",
+        "platform_name": "知乎",
+        "revenue": 317.76,
+        "cost": 185.36,
+        "profit": 132.39999999999998,
+        "profit_rate": 0.4167
+      }
+    ],
+    "revenue_by_type": [
+      {
+        "type": "知识付费",
+        "value": 2489.12
+      },
+      {
+        "type": "商单",
+        "value": 3760.16
+      },
+      {
+        "type": "平台激励",
+        "value": 1694.72
+      }
+    ],
+    "cost_by_type": [
+      {
+        "type": "广告",
+        "value": 2595.04
+      },
+      {
+        "type": "稿费",
+        "value": 609.04
+      },
+      {
+        "type": "运营成本",
+        "value": 370.72
+      }
+    ],
+    "revenue_platform_type": [
+      {
+        "platform": "xhs",
+        "platform_name": "小红书",
+        "by_type": {
+          "知识付费": 1694.72,
+          "商单": 1588.8,
+          "平台激励": 529.6
+        },
+        "total": 3813.12
+      },
+      {
+        "platform": "douyin",
+        "platform_name": "抖音",
+        "by_type": {
+          "知识付费": 264.8,
+          "商单": 1588.8,
+          "平台激励": 529.6
+        },
+        "total": 2383.2
+      },
+      {
+        "platform": "bili",
+        "platform_name": "B站",
+        "by_type": {
+          "知识付费": 105.92,
+          "商单": 423.68,
+          "平台激励": 423.68
+        },
+        "total": 953.28
+      },
+      {
+        "platform": "wechat",
+        "platform_name": "公众号",
+        "by_type": {
+          "知识付费": 264.8,
+          "商单": 105.92,
+          "平台激励": 105.92
+        },
+        "total": 476.64
+      },
+      {
+        "platform": "zhihu",
+        "platform_name": "知乎",
+        "by_type": {
+          "知识付费": 158.88,
+          "商单": 52.96,
+          "平台激励": 105.92
+        },
+        "total": 317.76
+      }
+    ],
+    "cost_platform_type": [
+      {
+        "platform": "xhs",
+        "platform_name": "小红书",
+        "by_type": {
+          "广告": 1165.12,
+          "稿费": 211.84,
+          "运营成本": 158.88
+        },
+        "total": 1535.84
+      },
+      {
+        "platform": "douyin",
+        "platform_name": "抖音",
+        "by_type": {
+          "广告": 953.28,
+          "稿费": 158.88,
+          "运营成本": 105.92
+        },
+        "total": 1218.08
+      },
+      {
+        "platform": "bili",
+        "platform_name": "B站",
+        "by_type": {
+          "广告": 264.8,
+          "稿费": 105.92,
+          "运营成本": 52.96
+        },
+        "total": 423.68
+      },
+      {
+        "platform": "wechat",
+        "platform_name": "公众号",
+        "by_type": {
+          "广告": 105.92,
+          "稿费": 79.44,
+          "运营成本": 26.48
+        },
+        "total": 211.84
+      },
+      {
+        "platform": "zhihu",
+        "platform_name": "知乎",
+        "by_type": {
+          "广告": 105.92,
+          "稿费": 52.96,
+          "运营成本": 26.48
+        },
+        "total": 185.36
+      }
+    ],
+    "waterfall": {
+      "revenue": [
+        {
+          "label": "上月合计",
+          "value": 12800.0,
+          "type": "total"
+        },
+        {
+          "label": "小红书",
+          "value": 3813.12,
+          "type": "up"
+        },
+        {
+          "label": "抖音",
+          "value": 2383.2,
+          "type": "up"
+        },
+        {
+          "label": "B站",
+          "value": 953.28,
+          "type": "up"
+        },
+        {
+          "label": "公众号",
+          "value": 476.64,
+          "type": "up"
+        },
+        {
+          "label": "知乎",
+          "value": 317.76,
+          "type": "up"
+        },
+        {
+          "label": "本月合计",
+          "value": 7944.0,
+          "type": "total"
+        }
+      ],
+      "cost": [
+        {
+          "label": "上月合计",
+          "value": 5800.0,
+          "type": "total"
+        },
+        {
+          "label": "小红书",
+          "value": 1535.84,
+          "type": "up"
+        },
+        {
+          "label": "抖音",
+          "value": 1218.08,
+          "type": "up"
+        },
+        {
+          "label": "B站",
+          "value": 423.68,
+          "type": "up"
+        },
+        {
+          "label": "公众号",
+          "value": 211.84,
+          "type": "up"
+        },
+        {
+          "label": "知乎",
+          "value": 185.36,
+          "type": "up"
+        },
+        {
+          "label": "本月合计",
+          "value": 3574.8,
+          "type": "total"
+        }
+      ],
+      "profit": [
+        {
+          "label": "上月利润",
+          "value": 7000.0,
+          "type": "total"
+        },
+        {
+          "label": "小红书",
+          "value": 2277.2799999999997,
+          "type": "up"
+        },
+        {
+          "label": "抖音",
+          "value": 1165.12,
+          "type": "up"
+        },
+        {
+          "label": "B站",
+          "value": 529.5999999999999,
+          "type": "up"
+        },
+        {
+          "label": "公众号",
+          "value": 264.79999999999995,
+          "type": "up"
+        },
+        {
+          "label": "知乎",
+          "value": 132.39999999999998,
+          "type": "up"
+        },
+        {
+          "label": "本月利润",
+          "value": 4369.2,
+          "type": "total"
+        }
+      ]
+    },
+    "hhi_index": 0.34,
+    "hhi_level": "warn",
+    "hhi_tag": "中度集中",
+    "profit_hhi": 0.3621,
+    "month_total_value": 7944.0,
+    "last_month_total_value": 12800.0,
+    "mom_growth": -0.3794,
+    "days_passed": 7
+  },
+  "trend_analysis": {
+    "recent7_avg_net": 26.29,
+    "prev7_avg_net": 21.14,
+    "mom_ratio": 0.2432,
+    "inflection": null,
+    "recent7_posts_daily": 1.43,
+    "publish_baseline_7m": 2.2
+  },
+  "structure_analysis": {
+    "platform_contribution": [
+      {
+        "id": "xhs",
+        "name": "小红书",
+        "new_fans": 397.0,
+        "revenue": 3813.12,
+        "content_count": 8.0,
+        "views": 98000.0,
+        "fans_now": 46200.0
+      },
+      {
+        "id": "douyin",
+        "name": "抖音",
+        "new_fans": 13.0,
+        "revenue": 2383.2,
+        "content_count": 6.0,
+        "views": 56000.0,
+        "fans_now": 5400.0
+      },
+      {
+        "id": "zhihu",
+        "name": "知乎",
+        "new_fans": 1.0,
+        "revenue": 317.76,
+        "content_count": 3.0,
+        "views": 18000.0,
+        "fans_now": 25200.0
+      },
+      {
+        "id": "bili",
+        "name": "B站",
+        "new_fans": 163.0,
+        "revenue": 953.28,
+        "content_count": 4.0,
+        "views": 31600.0,
+        "fans_now": 98400.0
+      },
+      {
+        "id": "wechat",
+        "name": "公众号",
+        "new_fans": 57.0,
+        "revenue": 476.64,
+        "content_count": 5.0,
+        "views": 7200.0,
+        "fans_now": 9000.0
+      }
+    ],
+    "totals": {
+      "fans_now": 184200.0,
+      "month_new_fans": 631.0,
+      "month_revenue": 7944.0,
+      "month_content": 26.0,
+      "month_views": 210800.0
+    },
+    "concentration": {
+      "fans_hhi": 0.3702,
+      "fans_hhi_level": "warn",
+      "fans_hhi_tag": "中度集中",
+      "revenue_hhi": 0.34,
+      "revenue_hhi_level": "warn",
+      "revenue_hhi_tag": "中度集中",
+      "newfans_hhi": 0.4712
+    },
+    "goal_tracking": {
+      "new_fans_rate": 0.3155,
+      "revenue_rate": 0.2648,
+      "new_fans_daily_needed": 57.0,
+      "revenue_daily_needed": 919.0
+    },
+    "top_content_exposure_shares": {
+      "total": 257700.0,
+      "top1_share": 0.0457,
+      "top3_share": 0.1346,
+      "top10_share": 0.4187,
+      "top1_title": "经营看板搭建方法 #1"
+    },
+    "attribution_efficiency": {
+      "total_new_fans": 631.0,
+      "xhs_share_in_attr": 0.6292,
+      "by_type_ranked": [
+        {
+          "type": "教程",
+          "new_fans": 360.0,
+          "views": 82000.0,
+          "fans_per_kview": 4.39
+        },
+        {
+          "type": "复盘",
+          "new_fans": 190.0,
+          "views": 54000.0,
+          "fans_per_kview": 3.52
+        },
+        {
+          "type": "案例",
+          "new_fans": 81.0,
+          "views": 26000.0,
+          "fans_per_kview": 3.12
+        }
+      ]
+    }
+  },
+  "anomaly_list": [
+    {
+      "level": "INFO",
+      "category": "business_risk",
+      "problem": "收入中度集中于 小红书 48.0%，HHI=0.340（中度集中）",
+      "assumption": "小红书电商+商单为主要变现通道，其他平台变现刚起步",
+      "actions": [
+        "提升 知乎变现效率，探索跨平台商单打包",
+        "保持小红书核心地位同时，逐步提升第二平台收入占比"
+      ],
+      "confidence": "high"
+    },
+    {
+      "level": "WARN",
+      "category": "revenue_pace",
+      "problem": "收入目标达成 26.5%（MTD ¥7,944.00 / 目标 ¥30,000.00），剩余 24 天需日均 ¥919.00",
+      "assumption": "变现节奏正常但客单价偏低 / 商单排期集中在下旬",
+      "actions": [
+        "提升日均收入至 ¥919.00 以上",
+        "排查是否有商单延期到账，加速回款",
+        "下旬增加 1-2 个品牌合作或直播带货场次"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "insights_per_module": {
+    "exec_summary_one_sentence": "8 月开局净增粉丝 631 人（月目标 31.6%），小红书贡献 63% 涨粉与 48% 收入 [模拟]（26% 达成收入目标，收入结构中度集中）；0 个平台存在数据滞后，部分结论置信度降低。",
+    "trend": "【趋势结论 · 高置信度】近 7 天日均净增 26，较前 7 天 上升24%；整体呈平稳波动形态；小红书（占 63%）是波动主要来源。",
+    "structure_fan_waterfall": "【结构结论 · 高置信度】5 平台全部正增长，但贡献极度不均：小红书 397（62.9%） + B站 163（25.8%） 合计贡献 89% 净增；知乎 仅 +1，属自然波动范围，不必过度解读。",
+    "structure_fans_donut": "【结构结论 · 高置信度】粉丝结构呈\"小红书+B站\"双平台主导（合计 78.5%），HHI=0.370 属中度集中。风险点：小红书单平台占比 25.1%，若出现账号限流将显著影响总盘；建议加速 抖音/知乎 补齐。",
+    "revenue_card": "【经营结论 · WARN】 [模拟数据]本月收入 ¥7,944.00， 环比上月 ¥12,800.00下降 37.9%，成本 ¥3,574.80（环比↓38.4%），利润 ¥4,369.20（利润率 55.0%），各平台贡献：小红书 ¥3,813.12（48.0%）、抖音 ¥2,383.20（30.0%）、B站 ¥953.28（12.0%）、公众号 ¥476.64（6.0%）、知乎 ¥317.76（4.0%）。HHI=0.340（中度集中），收入结构中度集中，小红书占比 48% 偏高。建议：① 提升 知乎 变现效率；② 探索跨平台商单打包。",
+    "revenue_card_goal": "【目标追踪】 [模拟数据]本月收入目标 ¥30,000.00，当前达成 26.5%，剩余 24 天需日均 ¥919.00。",
+    "content_table": "【内容结论 · 高置信度】本月内容呈极端头部化：Top1《经营看板搭建方法 #1》一篇独占 4.6% 曝光，Top3 合计 13.5%，Top10 合计 41.9%。这意味着① 内容生产 ROI 极度依赖爆款；② 若选题枯竭或平台限流，曝光将断崖式下滑。建议：把 Top1《经营看板搭建方法 #1》拆解为 3-5 篇系列续作，复用爆款结构。",
+    "scatter_quadrant": "【内容策略结论】建议把产能从\"待淘汰\"类选题（职场吐槽体、低效率鸡汤）转移到\"潜力+明星\"类选题（工具教程+实战案例），单位时间涨粉效率可提升 3×。重点盯第一象限：互动率 ≥ 中位数且阅读 ≥ 中位数的作品，复制其标题结构与封面要素。",
+    "attribution": "【归因结论 · 高置信度】62.9% 涨粉来自小红书（397/631），其中 教程 体裁每千曝光涨粉 4.4 人，是 案例（3.1）的 1.4 倍，在当前产能约束下，优先加码\"小红书图文工具教程类\"是单位产出最高的路径。",
+    "anomaly_overview": "【异常总览】2 项问题：1 WARN / 1 INFO。其中数据类问题需 24h 内处理，经营类问题纳入本周行动计划。"
+  },
+  "exec_summary": {
+    "one_sentence": "8 月开局净增粉丝 631 人（月目标 31.6%），小红书贡献 63% 涨粉与 48% 收入 [模拟]（26% 达成收入目标，收入结构中度集中）；0 个平台存在数据滞后，部分结论置信度降低。",
+    "full_report": "📈 增长态势：净增 631 / 总盘 184,200，近7日日均净增 26，环比前7日上升24%；月目标完成 31.6%，剩余 24 天需日均 57 粉。\n🧩 结构风险：粉丝呈 小红书+B站 双平台主导，粉丝HHI=0.37(中度集中)；收入 ¥7,944.00（达成 26%），收入HHI=0.34(中度集中) [模拟]；小红书单一渠道依赖度偏高，建议分散产能与变现路径。\n🎯 内容归因：Top1《经营看板搭建方法 #1…》占 4.6% 曝光，Top3 合计 13.5%，头部化程度可控；小红书 63% 涨粉贡献，教程千曝涨粉 4.4。\n🛠 数据质量与行动：✅ 全部平台数据新鲜度通过校验。建议：① 把 Top1 爆款拆解为 3-5 篇续作复制方法论；② 拓展第二收入平台以分散单一渠道集中度风险；③ 补足体裁效率短板，把低千曝涨粉体裁迭代或降产能。",
+    "capsules": [
+      {
+        "key": "pace",
+        "label": "增长节奏",
+        "text": "本月节奏正常：MTD 净增 631，剩余 24 天需日均 57 粉方可达成 2000 目标",
+        "level": "info"
+      },
+      {
+        "key": "revenue",
+        "label": "收入集中",
+        "text": "收入 HHI=0.34（中度集中），达成 26% [模拟]",
+        "level": "warn"
+      },
+      {
+        "key": "quality",
+        "label": "数据质量",
+        "text": "数据新鲜度：全部平台通过校验",
+        "level": "success"
+      },
+      {
+        "key": "head",
+        "label": "内容头部",
+        "text": "Top1 曝光占比 4.6%，头部化可控",
+        "level": "success"
+      }
+    ],
+    "level_counts": {
+      "CRITICAL": 0,
+      "WARN": 1,
+      "INFO": 1
+    }
+  }
+}

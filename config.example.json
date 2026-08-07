@@ -1,0 +1,16 @@
+{
+  "_comment": "复制为 config.json 后填写本地私有配置。不要提交 config.json。",
+  "ai_api_url": "",
+  "ai_api_key": "",
+  "ai_model": "",
+  "timeout": 30,
+  "lark": {
+    "recipients": [
+      {
+        "type": "user",
+        "name": "日报接收人",
+        "open_id": "ou_xxxxxxxxxxxxxxxxx"
+      }
+    ]
+  }
+}

@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="default">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2563EB">
+<title>自媒体数据中控台</title>
+<link rel="stylesheet" href="styles.css?v=20260807v9">
+</head>
+<body>
+<div class="app">
+
+  <!-- ===================== Top Bar ===================== -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">自</div>
+      <div class="brand-text">
+        <div class="b-title">自媒体数据中控台</div>
+        <div class="b-sub" id="brandSub">数据生成时间：—</div>
+      </div>
+    </div>
+
+    <div class="top-actions">
+      <button class="btn" id="btnRefresh">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.5 9a9 9 0 0114.8-3.4L23 10M1 14l4.7 4.4A9 9 0 0020.5 15"/></svg>
+        刷新
+      </button>
+      <button class="btn primary" id="btnReport">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg>
+        生成报告
+      </button>
+      <div class="apps-btn" id="appsBtn" title="平台后台入口">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+      </div>
+      <div class="skin-btn" id="skinBtn" title="皮肤主题">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== Skin Panel ===================== -->
+  <div class="skin-panel" id="skinPanel">
+    <div class="skin-panel-head">
+      <span class="skin-title">主题皮肤</span>
+      <button class="skin-close" id="skinClose">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="skin-list">
+      <div class="skin-item active" data-theme="default">
+        <div class="skin-preview skin-default">
+          <div class="skin-pv-label">默认</div>
+        </div>
+        <div class="skin-info">
+          <div class="skin-name">经典咨询蓝白</div>
+          <div class="skin-desc">专业 · 简洁 · 高效</div>
+        </div>
+        <div class="skin-check">✓</div>
+      </div>
+      <div class="skin-item" data-theme="portal">
+        <div class="skin-preview skin-portal">
+          <div class="skin-pv-label">传送门</div>
+        </div>
+        <div class="skin-info">
+          <div class="skin-name">瑞克与莫蒂</div>
+          <div class="skin-desc">科幻 · 绿黑金 · 疯狂</div>
+        </div>
+        <div class="skin-check">✓</div>
+      </div>
+      <div class="skin-item" data-theme="endfield">
+        <div class="skin-preview skin-endfield">
+          <div class="skin-pv-label">终末地</div>
+        </div>
+        <div class="skin-info">
+          <div class="skin-name">鹰角终末地</div>
+          <div class="skin-desc">硬边 · 黑黄 · 工业科幻</div>
+        </div>
+        <div class="skin-check">✓</div>
+      </div>
+      <div class="skin-item" data-theme="nebula">
+        <div class="skin-preview skin-nebula">
+          <div class="skin-pv-label">星云</div>
+        </div>
+        <div class="skin-info">
+          <div class="skin-name">深空星云</div>
+          <div class="skin-desc">神秘 · 深邃 · 沉浸</div>
+        </div>
+        <div class="skin-check">✓</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== Data Lag Banner ===================== -->
+  <div class="banner" id="dataBanner">
+    <span id="bannerText">部分平台数据滞后</span>
+    <span class="banner-act" id="bannerAct">查看详情</span>
+  </div>
+
+  <!-- ===================== Tab 切换 ===================== -->
+  <div class="tab-bar" id="tabBar">
+    <div class="tab-item active" data-tab="dashboard">
+      <svg class="tab-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+      数据看板
+    </div>
+    <div class="tab-item" data-tab="dataprep">
+      <svg class="tab-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M9 14l2 2 4-4"/><path d="M9 18h6"/></svg>
+      数据准备工作台
+      <span class="tab-badge" id="tabBadge">3</span>
+    </div>
+  </div>
+
+  <!-- ===================== Tab 内容 ===================== -->
+  <div class="tab-content active" data-tab="dashboard">
+
+  <!-- [新增 A] Executive Summary 经营摘要（全宽，横跨左侧+右侧） -->
+  <section class="exec-summary" id="execSummary">
+    <div class="es-sentence" id="esSentence">载入中…</div>
+    <div class="es-report" id="esReport"><!-- 3-4行完整报告，由 app.js 注入 --></div>
+    <div class="es-capsules" id="esCapsules"><!-- 4 个胶囊由 app.js 注入 --></div>
+  </section>
+
+  <!-- ===================== Two-Column Layout ===================== -->
+  <section class="layout-grid">
+
+    <!-- Left: Data Column -->
+    <div class="col-data">
+      <!-- Row 1: 核心指标 KPI -->
+      <section class="kpi-strip" id="kpiStrip"></section>
+
+      <!-- 统一背景区：趋势图 → 归因分析 -->
+      <div class="dashboard-body" id="dashboardBody">
+        <div class="db-section" data-section="trends">
+          <div class="db-conclusion" id="dbInsTrends"></div>
+          <!-- Row 2: 趋势图 + 饼图 -->
+          <div class="trend-plat-row three-col">
+            <!-- 净增趋势 -->
+            <div class="mod-card equal-height">
+              <div class="mod-title">
+                净增趋势
+                <span class="q">增长/停滞/波动？</span>
+                <span class="sub" id="trendSub">按当前筛选条件</span>
+              </div>
+              <p class="insight-text" id="insTrend"></p>
+              <div class="chart-box flex-chart"><canvas class="chart" id="chartTrend" height="220"></canvas></div>
+            </div>
+
+            <!-- 平台净增（可互动瀑布图） -->
+            <div class="mod-card equal-height">
+              <div class="mod-title">
+                平台净增
+                <span class="q">点击条形筛选该平台</span>
+                <span class="sub">瀑布图展示贡献顺序</span>
+              </div>
+              <p class="insight-text" id="insNetBar"></p>
+              <div class="chart-box flex-chart netbar-box" id="netBarBox"></div>
+            </div>
+
+            <!-- 粉丝分布 + HHI 仪表 -->
+            <div class="mod-card equal-height">
+              <div class="mod-title">
+                粉丝分布
+                <span class="sub">绝对数 + 集中度 HHI</span>
+              </div>
+              <p class="insight-text" id="insDonut"></p>
+              <div class="donut-row flex-chart" id="donutBox"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="db-divider"></div>
+
+        <div class="db-section" data-section="revenue">
+          <div class="db-conclusion" id="dbInsRevenue"></div>
+          <!-- Row 2.5: 收入结构与风险 -->
+          <div class="mod-card revenue-card" id="revenueCard">
+            <div class="mod-title">
+              经营损益分析
+              <span class="sub">收入 / 成本 / 利润三维拆解</span>
+              <span class="level-tag critical" id="revLevelTag" style="margin-left:auto;display:none;">CRITICAL</span>
+            </div>
+            <div class="rev-insights">
+              <p class="insight-text" id="insRevenue"></p>
+              <p class="insight-text secondary" id="insRevenueGoal"></p>
+            </div>
+            <!-- 3 KPI 核心卡片 -->
+            <div class="rev-kpi-row" id="revKpiRow"></div>
+            <!-- 主体：左侧瀑布图 + 右侧双饼图 -->
+            <div class="rev-layout">
+              <div class="rev-waterfall-wrap">
+                <!-- 瀑布图筛选 tab -->
+                <div class="wf-filter-bar" id="wfFilterBar">
+                  <button class="wf-tab active" data-wf="revenue">收入</button>
+                  <button class="wf-tab" data-wf="cost">成本</button>
+                  <button class="wf-tab" data-wf="profit">利润</button>
+                </div>
+                <div class="waterfall-chart" id="revWaterfall"></div>
+              </div>
+              <div class="rev-pies">
+                <div class="pie-block">
+                  <div class="pie-title">收入类型分布</div>
+                  <div class="donut-row flex-chart" id="revTypeDonut"></div>
+                </div>
+                <div class="pie-block">
+                  <div class="pie-title">成本类型分布</div>
+                  <div class="donut-row flex-chart" id="costTypeDonut"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="db-divider"></div>
+
+        <div class="db-section" data-section="content">
+          <div class="db-conclusion" id="dbInsContent"></div>
+          <!-- Row 3: 内容分析 -->
+          <div class="mod-card content-analysis">
+            <!-- 左列：我的内容数据 -->
+            <div class="ca-left">
+              <div class="mod-title">
+                我的内容表现
+                <span class="q">各平台发布内容的阅读与互动表现</span>
+                <span class="sub" id="contentSub">按发布时间与热度综合排序</span>
+              </div>
+              <p class="insight-text" id="insContentTable"></p>
+              <div class="topn-strip" id="topnStrip"></div>
+              <div class="content-filter-bar" id="contentFilterBar"></div>
+              <div class="content-table-wrap">
+                <div class="content-table" id="contentTable"></div>
+              </div>
+            </div>
+
+            <!-- 右列：Top卡片 + 四象限 -->
+            <div class="ca-right">
+              <!-- 右上：Top内容卡片 -->
+              <div class="ca-block ca-top">
+                <div class="ca-block-head">热门内容 <span class="sub">阅读最高</span></div>
+                <div class="top-content-cards" id="topContentCards"></div>
+              </div>
+
+              <!-- 右下：阅读-互动率 四象限 -->
+              <div class="ca-block ca-scatter">
+                <div class="ca-block-head">
+                  阅读 - 互动率 四象限
+                  <span class="q">点击圆点可打开原内容</span>
+                </div>
+                <p class="insight-text" id="insScatter"></p>
+                <div class="scatter-filter-bar" id="scatterFilterBar"></div>
+                <div class="scatter-box">
+                  <canvas class="chart" id="chartScatter"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="db-divider"></div>
+
+        <div class="db-section" data-section="attribution">
+          <div class="db-conclusion" id="dbInsAttr"></div>
+          <!-- Row 4: 粉丝增长归因（树形图） -->
+          <div class="mod-card attribution-card">
+            <div class="mod-title">
+              粉丝增长归因
+              <span class="q">哪些内容带来了涨粉</span>
+              <span class="sub" id="attrSub">平台 → 体裁 → 内容，贡献＜10%不展示</span>
+            </div>
+            <div class="attr-insight" id="attrInsight">
+              <div class="attr-insight-row" data-role="platform">
+                <span class="ai-label">平台贡献</span>
+                <span class="ai-content"></span>
+              </div>
+              <div class="attr-insight-row" data-role="type">
+                <span class="ai-label">体裁贡献</span>
+                <span class="ai-content"></span>
+              </div>
+              <div class="attr-insight-row" data-role="top">
+                <span class="ai-label">最佳内容</span>
+                <span class="ai-content"></span>
+              </div>
+            </div>
+            <div class="attr-tree-wrap" id="attrTreeWrap">
+              <div class="attr-tree-empty" id="attrTreeEmpty">暂无归因数据</div>
+              <svg class="attr-tree-svg" id="attrTreeSvg" xmlns="http://www.w3.org/2000/svg"></svg>
+            </div>
+            <div class="attr-tree-legend" id="attrTreeLegend"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Sidebar (固定宽度，贯穿全高) -->
+    <aside class="col-side">
+      <!-- 框2：筛选器（问题4：独立顶栏 + 小标题栏 + 顶3px色条 + 模块间距16） -->
+      <div class="mod-card filter-panel" id="filterBar">
+        <div class="fp-title">
+          <span class="ico-fp">⚑</span>
+          筛选器
+          <span class="sub">点击切换条件</span>
+          <span class="right-side" id="filterStatusRight">平台 5 · 时间 4</span>
+        </div>
+        <div class="filter-body">
+          <div class="filter-group">
+            <span class="fg-label">平台</span>
+            <div class="chip-row">
+              <div class="chip active" data-filter="platform" data-value="all">全部</div>
+              <div class="chip" data-filter="platform" data-value="xhs">小红书</div>
+              <div class="chip" data-filter="platform" data-value="bili">B站</div>
+              <div class="chip" data-filter="platform" data-value="zhihu">知乎</div>
+              <div class="chip" data-filter="platform" data-value="wechat">公众号</div>
+              <div class="chip" data-filter="platform" data-value="douyin">抖音</div>
+            </div>
+          </div>
+          <div class="filter-group">
+            <span class="fg-label">时间</span>
+            <div class="chip-row">
+              <div class="chip" data-filter="time" data-value="7d">近7天</div>
+              <div class="chip active" data-filter="time" data-value="month">本月</div>
+              <div class="chip" data-filter="time" data-value="30d">近30天</div>
+              <div class="chip" data-filter="time" data-value="custom">自定义</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 框3：热榜收集 -->
+      <div class="mod-card">
+        <div class="mod-title">
+          热榜收集
+          <span class="sub">转选题素材</span>
+          <span class="hot-refresh" id="hotSuggest" style="margin-left:auto;">搜索推荐 ›</span>
+          <span class="hot-refresh" id="hotMore" style="margin-left:8px;">全部 ›</span>
+        </div>
+        <div class="hot-input-row">
+          <input class="hot-input" id="hotInput" placeholder="输入热榜标题或链接...">
+          <select id="hotPlatform" class="hot-input" style="width:auto;flex:0 0 100px;">
+            <option value="xhs">小红书</option>
+            <option value="douyin">抖音</option>
+            <option value="zhihu">知乎</option>
+            <option value="bili">B站</option>
+            <option value="wechat">公众号</option>
+          </select>
+          <button class="hot-add" id="hotAddBtn">添加</button>
+        </div>
+        <div class="hot-suggest-box" id="hotSuggestBox" style="display:none;"></div>
+        <div class="hot-list" id="hotList"></div>
+      </div>
+
+      <!-- 框4：笔记灵感 + AI 素材转化 -->
+      <div class="mod-card note-card" id="noteCard">
+        <div class="mod-title">
+          笔记灵感
+          <span class="sub">AI 转素材</span>
+          <span class="hot-refresh" id="noteHistoryBtn" style="margin-left:auto;">留档 ›</span>
+        </div>
+        <div class="note-ai-status" id="noteAiStatus"></div>
+        <div class="note-input-area">
+          <textarea class="note-textarea" id="noteInput" placeholder="随手记下灵感、选题想法、碎片思考..." rows="3"></textarea>
+          <div class="note-meta-row">
+            <select id="notePlatform" class="hot-input" style="width:auto;flex:0 0 100px;">
+              <option value="xhs">小红书</option>
+              <option value="douyin">抖音</option>
+              <option value="zhihu">知乎</option>
+              <option value="bili">B站</option>
+              <option value="wechat">公众号</option>
+            </select>
+            <input class="note-tag-input" id="noteTags" placeholder="标签，逗号分隔" style="flex:1;">
+            <button class="hot-add" id="noteAddBtn">保存</button>
+          </div>
+        </div>
+        <div class="note-list" id="noteList"></div>
+      </div>
+    </aside>
+
+  </section>
+  </div><!-- /tab-content dashboard -->
+
+  <!-- ===================== Tab：数据准备工作台 ===================== -->
+  <div class="tab-content" data-tab="dataprep">
+    <section class="dp-layout">
+
+      <!-- 行1：数据质量体检 6 维度评分卡（总览级 · card-lg） -->
+      <div class="mod-card card-lg">
+        <div class="mod-title">
+          <span class="dp-title-icon">🔬</span>
+          数据质量体检
+          <span class="sub">对标 data-processing 路径A：6 维度完整性检查</span>
+          <span class="dp-score-total" id="dpScoreTotal">综合评分 —</span>
+        </div>
+        <div class="dp-quality-grid" id="dpQualityGrid">
+          <!-- 6 个维度卡片由 app.js 渲染 -->
+        </div>
+      </div>
+
+      <!-- 行2：左侧 处理流水时间线 + 右侧 问题分级清单（流程级） -->
+      <div class="dp-row-2">
+        <div class="mod-card dp-timeline-card">
+          <div class="mod-title">
+            <span class="dp-title-icon">⚙️</span>
+            今日数据处理流水
+            <span class="sub">对标 data-processing 路径B：处理记录摘要</span>
+          </div>
+          <div class="dp-timeline" id="dpTimeline">
+            <!-- 步骤由 app.js 渲染 -->
+          </div>
+        </div>
+
+        <div class="mod-card dp-issues-card">
+          <div class="mod-title">
+            <span class="dp-title-icon">⚠️</span>
+            问题分级清单
+            <span class="sub">🔴阻断 / 🟡待决策 / 🟢轻微</span>
+          </div>
+          <div class="dp-issue-list" id="dpIssueList">
+            <!-- 问题由 app.js 渲染 -->
+          </div>
+        </div>
+      </div>
+
+      <!-- 行3：平台新鲜度热力矩阵（细节级 · card-sm） -->
+      <div class="mod-card card-sm">
+        <div class="mod-title">
+          <span class="dp-title-icon">🗓️</span>
+          各平台数据新鲜度概览
+          <span class="sub">对标 data-processing 路径C：时效性可视化</span>
+          <span class="dp-legend">
+            <i class="dot ready"></i>正常
+            <i class="dot stale"></i>过期
+            <i class="dot miss"></i>缺失
+          </span>
+        </div>
+        <div class="dp-heat-grid" id="dpHeatGrid">
+          <!-- 热力矩阵由 app.js 渲染 -->
+        </div>
+      </div>
+
+      <!-- 行4：数据来源溯源（细节级 · card-sm） -->
+      <div class="mod-card card-sm">
+        <div class="mod-title">
+          <span class="dp-title-icon">📂</span>
+          指标溯源（每个指标可追溯到来源文件）
+          <span class="sub">遵循项目稳定性原则：每个指标都要能追溯</span>
+        </div>
+        <div class="dp-trace-table" id="dpTraceTable">
+          <!-- 溯源表由 app.js 渲染 -->
+        </div>
+      </div>
+
+      <!-- 行5：数据文件体检详情（总览级 · card-lg） -->
+      <div class="mod-card card-lg">
+        <div class="mod-title">
+          <span class="dp-title-icon">📋</span>
+          今日数据文件体检详情
+          <span class="sub">对标 data-processing 路径A：文件概况 → 字段类型 → 非空率 → 预览</span>
+          <span class="dp-file-switch" id="dpFileSwitch">
+            <span class="dps active" data-f="full">原始版.json</span>
+            <i class="sep">·</i>
+            <span class="dps" data-f="compact">紧凑版.json</span>
+            <i class="sep">·</i>
+            <span class="dps" data-f="content">内容Top</span>
+          </span>
+        </div>
+        <!-- 文件概况卡片 -->
+        <div class="dp-file-summary" id="dpFileSummary"></div>
+        <!-- 字段类型 + 非空率 -->
+        <div class="dp-fields-grid">
+          <div class="dp-fields-block">
+            <div class="dp-block-title">📐 字段类型分布</div>
+            <div class="dp-field-types" id="dpFieldTypes"></div>
+          </div>
+          <div class="dp-fields-block">
+            <div class="dp-block-title">🟢 关键字段非空率（Top 8）</div>
+            <div class="dp-field-nonull" id="dpFieldNoNull"></div>
+          </div>
+        </div>
+        <!-- 前 5 行预览 -->
+        <div class="dp-preview-block">
+          <div class="dp-block-title">🔎 数据预览 · 前 5 行</div>
+          <div class="dp-preview-scroll"><div class="dp-preview-table" id="dpPreviewTable"></div></div>
+        </div>
+      </div>
+
+      <!-- 行6：图表选型决策 + 可视化规范自检 -->
+      <div class="dp-row-2">
+        <div class="mod-card">
+          <div class="mod-title">
+            <span class="dp-title-icon">🎯</span>
+            看板图表选型决策
+            <span class="sub">对标 data-processing references/chart-selection.md 决策树</span>
+          </div>
+          <div class="dp-chart-decisions" id="dpChartDecisions"></div>
+        </div>
+        <div class="mod-card">
+          <div class="mod-title">
+            <span class="dp-title-icon">🧪</span>
+            可视化规范自检清单
+            <span class="sub">对标 data-processing 可视化原则 · 10 项通过 / 警告 / 不通过</span>
+            <span class="dp-check-score" id="dpCheckScore">—</span>
+          </div>
+          <div class="dp-check-list" id="dpCheckList"></div>
+        </div>
+      </div>
+
+      <!-- 行7：多源数据合并 + 编码处理记录 -->
+      <div class="mod-card">
+        <div class="mod-title">
+          <span class="dp-title-icon">🔀</span>
+          多源数据合并策略 & 编码处理记录
+          <span class="sub">对标 data-processing：多文件 concat/merge + chardet 编码检测</span>
+        </div>
+        <div class="dp-merge-layout">
+          <div class="dp-merge-flow" id="dpMergeFlow"></div>
+          <div class="dp-encoding-card">
+            <div class="dp-block-title">🧾 编码处理记录（chardet 检测链路）</div>
+            <div class="dp-encoding-log" id="dpEncodingLog"></div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </div><!-- /tab-content dataprep -->
+
+</div><!-- /app -->
+
+<!-- ===================== Skin Mask ===================== -->
+<div class="skin-mask" id="skinMask"></div>
+
+<!-- ===================== Platform Entry Popover ===================== -->
+<div class="apps-pop" id="appsPop">
+  <div class="apps-pop-title">平台后台入口</div>
+  <div class="apps-grid" id="appsGrid"></div>
+</div>
+
+<!-- ===================== Report Modal ===================== -->
+<div class="modal-mask" id="reportModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h2>生成分析报告</h2>
+      <button class="modal-close" id="reportClose">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div>将根据当前视图筛选条件生成报告：</div>
+      <div class="report-summary">
+        <div class="rs-row"><span class="rs-k">平台</span><span class="rs-v" id="rptPlatform">全部平台</span></div>
+        <div class="rs-row"><span class="rs-k">时间</span><span class="rs-v" id="rptTime">本月</span></div>
+        <div class="rs-row"><span class="rs-k">数据区间</span><span class="rs-v" id="rptRange">—</span></div>
+      </div>
+      <div class="report-warn" id="reportWarn" style="display:none;"></div>
+      <div style="font-size:13px;color:var(--text-secondary);margin-bottom:8px;">报告类型</div>
+      <div class="report-type-row">
+        <div class="rt-option active" data-type="daily">日报</div>
+        <div class="rt-option" data-type="weekly">周报</div>
+        <div class="rt-option" data-type="monthly">月报</div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" id="reportCancel">取消</button>
+      <button class="btn primary" id="reportConfirm">生成报告</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== Hotlist Drawer (全量列表) ===================== -->
+<div class="drawer-mask" id="drawerMask"></div>
+<div class="drawer" id="hotDrawer">
+  <div class="drawer-head">
+    <h2>热榜素材库</h2>
+    <button class="modal-close" id="drawerClose">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="drawer-filters">
+    <select id="drawerPlatform">
+      <option value="all">全部平台</option>
+      <option value="xhs">小红书</option>
+      <option value="douyin">抖音</option>
+      <option value="zhihu">知乎</option>
+      <option value="bili">B站</option>
+      <option value="wechat">公众号</option>
+    </select>
+    <select id="drawerStatus">
+      <option value="all">全部状态</option>
+      <option value="unread">未读</option>
+      <option value="read">已读</option>
+      <option value="to_topic">已转选题</option>
+      <option value="ignored">已忽略</option>
+    </select>
+    <select id="drawerKeyword">
+      <option value="all">全部关键词</option>
+    </select>
+  </div>
+  <div class="drawer-body" id="drawerBody"></div>
+</div>
+
+<!-- ===================== AI 素材留档 Drawer ===================== -->
+<div class="drawer" id="aiDrawer">
+  <div class="drawer-head">
+    <h2>AI 素材留档</h2>
+    <button class="modal-close" id="aiDrawerClose">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="drawer-body" id="aiDrawerBody"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- 移动端底部平台入口浮层容器 -->
+<div class="apps-pop" id="appsPopMobile"></div>
+
+<script src="charts.js?v=20260807v"></script>
+<script src="bridge.js?v=20260806m2"></script>
+<script src="app.js?v=20260807v2"></script>
+<script src="report-modal.js?v=20260806m"></script>
+<!-- 诊断条：定位问题后默认隐藏，有需要再打开（去掉 style.display 即可） -->
+<div id="dbg" style="position:fixed;bottom:0;left:0;right:0;background:#1a1a1a;color:#0f0;font-size:11px;padding:4px 8px;z-index:9998;font-family:monospace;white-space:pre-wrap;display:none;"></div>
+<div id="dbgDonut" style="position:fixed;bottom:22px;left:0;right:0;background:#4c1d95;color:#fff;font-size:11px;padding:4px 8px;z-index:9997;font-family:monospace;white-space:pre-wrap;display:none;"></div>
+</body>
+</html>
