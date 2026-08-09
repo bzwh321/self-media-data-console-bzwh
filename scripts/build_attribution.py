@@ -29,13 +29,12 @@ except ImportError:
     print("ERROR: openpyxl 未安装，请运行 py -m pip install openpyxl", file=sys.stderr)
     sys.exit(1)
 
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DATA_ROOT = Path(os.environ.get("SELF_MEDIA_DATA_ROOT", str(PROJECT_ROOT / "sample-data" / "self-media")))
 DASHBOARD_DIR = DATA_ROOT / "dashboard-normalized"
 DETAIL_CSV = DASHBOARD_DIR / "self_media_content_detail.csv"
-DOUYIN_MONTHLY_DIR = DATA_ROOT / "抖音数据" / "服务器同步" / "抖音+高清发布" / "monthly" / "content_list"
-DOUYIN_RAW_DIR = DATA_ROOT / "抖音数据" / "服务器同步" / "抖音+高清发布" / "raw" / "content_list"
-
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
+DOUYIN_MONTHLY_DIR = DATA_ROOT / "douyin" / "monthly" / "content_list"
+DOUYIN_RAW_DIR = DATA_ROOT / "douyin" / "raw" / "content_list"
 OUTPUT_PATH = PROJECT_ROOT / "runtime-data" / "console-state" / "attribution.json"
 
 TOP_N = 20

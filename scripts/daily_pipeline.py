@@ -986,10 +986,10 @@ def build_business_ops_analysis(context: dict[str, Any]) -> dict[str, Any]:
                     "level": level,
                     "category": "data_quality",
                     "problem": f"{name} 内容快照停更 {days_stale} 天（{m.group(1) if m else '详情见日志'}）：{issue}",
-                    "assumption": "账号登录态失效 / 服务器 Playwright 风控异常 / 采集脚本报错",
+                    "assumption": "账号登录态失效 / 采集工具风控异常 / 采集脚本报错",
                     "actions": [
-                        "登录服务器检查对应平台采集脚本日志是否抛出风控/登录异常",
-                        "重新扫码登录采集账号并确认 Cookie 已刷新",
+                        "检查对应平台采集脚本日志是否抛出风控/登录异常",
+                        "重新登录采集账号并确认登录态已恢复",
                         f"补抓最近 {days_stale} 天的内容明细数据",
                     ],
                     "confidence": "high",

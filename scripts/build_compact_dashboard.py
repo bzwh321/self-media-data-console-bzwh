@@ -24,7 +24,9 @@ from datetime import datetime
 from collections import Counter
 from pathlib import Path
 
-DASH_DIR = Path(r"<DATA_ROOT>\dashboard-normalized")
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+DATA_ROOT = Path(os.environ.get("SELF_MEDIA_DATA_ROOT", str(PROJECT_ROOT / "sample-data" / "self-media")))
+DASH_DIR = DATA_ROOT / "dashboard-normalized"
 DASHBOARD_PATH = DASH_DIR / "self_media_dashboard.json"
 DETAIL_CSV = DASH_DIR / "self_media_content_detail.csv"
 COMPACT_PATH = DASH_DIR / "compact_dashboard_data.json"

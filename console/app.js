@@ -2560,7 +2560,7 @@
     var steps = [
       { id: 1, name: '服务器同步采集结果',
         st: (syncSt === 'ready' || syncSt === 'success') ? 'ok' : 'err',
-        desc: '从 Ubuntu 服务器 /home/ubuntu/data/ 拉取 5 平台原始 CSV + 日粒度 JSON，Rsync 增量同步。',
+        desc: '从数据源服务器拉取 5 平台原始 CSV + 日粒度 JSON，增量同步。',
         meta: [['文件数', 24], ['大小', '18.3 MB'], ['耗时', '6.2 s']],
         time: addMin(timePart, -35)
       },
@@ -2649,15 +2649,15 @@
         lv: 'yel',
         title: p.name + ' 数据滞后（需要决策）',
         desc: '平台阈值允许 T-1，但当前最新数据仍未更新。' + issues + '。',
-        action: '建议：检查服务器对应平台任务日志，是否触发登录态失效或风控'
+        action: '建议：检查对应平台采集任务日志，是否触发登录态失效或采集异常'
       });
     });
     // 3) 🟡 服务器同步状态
     if (META && META.sync_status && META.sync_status !== 'ready' && META.sync_status !== 'success') {
       items.push({
         lv: 'yel', title: '服务器同步状态异常：' + META.sync_status,
-        desc: 'server_sync_refresh_report.json 显示 Rsync 或拉取环节异常。即使本地有缓存数据，也应判断是否为昨日残留。',
-        action: '建议：登录服务器检查 crontab 与磁盘空间，重跑 sync 脚本'
+        desc: 'server_sync_refresh_report.json 显示同步或拉取环节异常。即使本地有缓存数据，也应判断是否为昨日残留。',
+        action: '建议：检查定时任务调度与磁盘空间，重跑同步脚本'
       });
     }
     // 4) 🟢 轻微：个别内容 Top 标题缺失
@@ -3120,7 +3120,7 @@
       var steps = [
         { n: 'm1', t: 'STEP', no: 1,
           name: '多源原始文件读取（5 平台）', strategy: '按平台分批',
-          body: '从服务器 /home/ubuntu/data/self-media/{platform}/ 分别拉取：粉丝快照 CSV、日粒度指标 JSON、内容 Top XLSX、收入账单 CSV。结构不同，不强行合并。',
+          body: '从数据源按平台分别拉取：粉丝快照 CSV、日粒度指标 JSON、内容 Top XLSX、收入账单 CSV。结构不同，不强行合并。',
           meta: [['源文件数', 24], ['平台', 5], ['磁盘占用', '18.3 MB']]
         },
         { n: 'm2', t: '类型', no: 'T',
