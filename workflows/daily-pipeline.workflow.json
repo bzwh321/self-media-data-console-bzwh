@@ -2,7 +2,7 @@
   "schema": "daily-self-media-pipeline.public.v1",
   "name": "每日自媒体数据中控台流水线（公开版）",
   "owner_agent": "self-media-console-director",
-  "mode": "sample-data-first",
+  "mode": "demo-data-first",
   "stages": [
     {
       "id": "load_sample_data",

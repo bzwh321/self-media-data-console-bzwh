@@ -493,6 +493,13 @@ canvas.chart{width:100%;display:block;}
 .banner{display:none;align-items:center;gap:10px;background:#FEF3C7;color:#92400E;border:1px solid #FCD34D;border-radius:var(--radius-card);padding:10px 16px;font-size:13px;flex-shrink:0;}
 .banner.show{display:flex;}
 .banner .banner-act{margin-left:auto;cursor:pointer;color:var(--accent-text);font-weight:600;}
+.data-mode-banner{display:flex;align-items:center;gap:10px;padding:9px 14px;border-radius:var(--radius-card);font-size:12px;border:1px solid #BFDBFE;background:#EFF6FF;color:#1E3A8A;}
+.data-mode-banner.user{border-color:#A7F3D0;background:#ECFDF5;color:#065F46;}
+.data-mode-tag{padding:3px 8px;border-radius:999px;background:#2563EB;color:#fff;font-size:11px;font-weight:700;white-space:nowrap;}
+.data-mode-banner.user .data-mode-tag{background:#059669;}
+.data-mode-text{font-weight:500;}
+.data-mode-path{margin-left:auto;color:inherit;background:rgba(255,255,255,.65);padding:3px 7px;border-radius:5px;}
+.es-toggle{display:none;border:0;background:transparent;color:var(--accent-text);font-size:12px;font-weight:700;padding:6px 0 0;cursor:pointer;}
 
 /* ---------- Empty State ---------- */
 .empty{text-align:center;padding:32px 20px;color:var(--text-tertiary);font-size:13px;}
@@ -620,6 +627,19 @@ canvas.chart{width:100%;display:block;}
   /* 数据滞后 banner */
   .banner{flex-wrap:wrap;font-size:12px;padding:8px 12px;}
   .banner .banner-act{margin-left:0;width:100%;margin-top:4px;}
+  .data-mode-banner{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:6px 8px;padding:8px 10px;}
+  .data-mode-path{grid-column:2;grid-row:1;width:auto;margin-left:auto;max-width:100%;overflow:hidden;text-overflow:ellipsis;}
+  .data-mode-text{grid-column:1 / -1;font-size:11px;line-height:1.45;}
+  .exec-summary{padding:12px 14px 10px;}
+  .es-sentence{font-size:13px;line-height:1.55;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+  .exec-summary.expanded .es-sentence{-webkit-line-clamp:unset;}
+  .es-report{margin-top:7px;}
+  .es-line{font-size:12px;line-height:1.6;}
+  .es-line:nth-child(n+3){display:none;}
+  .exec-summary.expanded .es-line{display:block;}
+  .es-toggle{display:block;}
+  .es-capsules{gap:6px;margin-top:8px;}
+  .es-capsule{padding:4px 9px;font-size:11px;}
 
   /* KPI 2 列 */
   .kpi-strip{grid-template-columns:repeat(2,1fr);gap:8px;}
@@ -1479,14 +1499,14 @@ canvas.chart{width:100%;display:block;}
    ============================================================ */
 
 /* ============================================================
-   主题 2: 瑞克与莫蒂 (data-theme="portal")
-   — 黑底 + 传送门绿 + 金色点缀
+   主题 2: 翡翠矩阵 (data-theme="portal")
+   — 黑底 + 荧光绿 + 金色点缀
    ============================================================ */
 html[data-theme="portal"]{
-  /* 背景：纯黑 + 传送门绿光漩涡 */
+  /* 背景：纯 CSS 深色矩阵渐变 */
   --page-bg:#0A0A0A;
   --page-bg-grad:linear-gradient(180deg,#050505 0%,#0A0A0A 40%,#0D0D0D 100%);
-  --theme-bg-image:url('assets/skins/portal-bg-v2.jpg');
+  --theme-bg-image:none;
   --theme-bg-overlay:radial-gradient(ellipse at 50% 25%,rgba(0,230,118,.10) 0%,rgba(0,200,83,.05) 35%,rgba(10,10,10,.94) 80%);
   
   /* 表面层：深黑半透明玻璃感 */
@@ -1506,7 +1526,7 @@ html[data-theme="portal"]{
   --border-soft:rgba(0,230,118,.18);
   --border-micro:rgba(0,230,118,.10);
   
-  /* 主色：传送门绿 + 瑞克金 */
+  /* 主色：荧光绿 + 暖金 */
   --accent:#00E676;
   --accent-2:#00C853;
   --accent-3:#69F0AE;
@@ -1517,7 +1537,7 @@ html[data-theme="portal"]{
   --accent-text:#69F0AE;
   --on-accent:#0A0A0A;
   
-  /* 金色强调色（莫蒂的黄衬衫） */
+  /* 金色强调色 */
   --gold:#FFD54F;
   --gold-soft:rgba(255,213,79,.15);
   --gold-strong:#FFC107;
@@ -1584,14 +1604,11 @@ html[data-theme="portal"] .es-capsule.cr{background:rgba(239,83,80,.1);border-co
 html[data-theme="portal"] .es-capsule.wn{background:rgba(255,167,38,.1);border-color:rgba(255,167,38,.22);}
 html[data-theme="portal"] .es-capsule.ok{background:rgba(105,240,174,.12);border-color:rgba(105,240,174,.22);}
 
-/* Portal 主题：Logo 替换为瑞克与莫蒂人物形象 */
+/* 翡翠矩阵主题：纯 CSS 标识 */
 html[data-theme="portal"] .brand .logo{
-  background-image:url('assets/skins/portal-logo.jpg');
-  background-size:cover;
-  background-position:center;
-  background-repeat:no-repeat;
-  font-size:0;
-  color:transparent;
+  background-image:linear-gradient(135deg,#00C853,#B2FF59);
+  font-size:18px;
+  color:#07140B;
   border:2px solid rgba(0,230,118,.5);
   box-shadow:0 0 16px rgba(0,230,118,.35),0 3px 10px rgba(0,0,0,.5);
   position:relative;
@@ -1829,7 +1846,7 @@ html[data-theme="nebula"]{
   /* 背景：星云主题 */
   --page-bg:#0A0514;
   --page-bg-grad:linear-gradient(180deg,#070311 0%,#0A0514 40%,#0E0820 100%);
-  --theme-bg-image:url('assets/skins/space-bg.jpg');
+  --theme-bg-image:none;
   --theme-bg-overlay:radial-gradient(ellipse at 50% 40%,rgba(91,33,182,.12) 0%,rgba(49,46,129,.08) 45%,rgba(10,5,20,.92) 100%);
   
   /* 表面层 */
@@ -2069,13 +2086,13 @@ html[data-theme="nebula"] .skin-btn:hover{
 }
 
 /* ============================================================
-   主题 3: 鹰角终末地 (data-theme="endfield")
-   — 黑黄硬边 · 锐利几何 · 工业科幻
+   主题 4: 工业信标 (data-theme="endfield")
+   — 黑黄硬边 · 锐利几何 · 工业界面
    ============================================================ */
 html[data-theme="endfield"]{
   --page-bg:#0A0A0A;
   --page-bg-grad:linear-gradient(180deg,#050505 0%,#0A0A0A 50%,#0F0F0F 100%);
-  --theme-bg-image:url('assets/skins/ark-bg.jpg');
+  --theme-bg-image:none;
   --theme-bg-overlay:linear-gradient(180deg,rgba(10,10,10,.88) 0%,rgba(10,10,10,.92) 100%);
   
   --surface:#141414;
@@ -2187,12 +2204,9 @@ html[data-theme="endfield"] .dashboard-body .mod-card{
 }
 
 html[data-theme="endfield"] .brand .logo{
-  background-image:url('assets/skins/ark-logo.jpg');
-  background-size:cover;
-  background-position:center;
-  background-repeat:no-repeat;
-  font-size:0;
-  color:transparent;
+  background-image:linear-gradient(135deg,#FFD54F,#FFB300);
+  font-size:18px;
+  color:#111;
   border:2px solid var(--accent);
   box-shadow:none;
 }

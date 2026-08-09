@@ -7,5 +7,5 @@
 1. 新增或修改数据契约时，先更新 `docs/架构与数据链路.md`。
 2. 修改前端看板时，优先保持 `console/index.html`、`console/app.js`、`console/styles.css` 的职责分离。
 3. 新增皮肤时，参考 `docs/皮肤系统开发规范.md`。
-4. 引入真实数据前，先在 `sample-data` 中构造同结构虚拟数据。
+4. 新增字段或平台前，先用 `scripts/generate_demo_data.py` 在 `data/demo` 构造同结构模拟数据。
 5. 提交前执行公开发布检查，确认没有真实凭据和个人路径。

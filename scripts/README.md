@@ -1,20 +1,30 @@
 # 脚本说明
 
-所有 Python 脚本兼容 Python 3.8+，除 `build_attribution.py` 外均仅使用标准库。
+所有 Python 脚本兼容 Python 3.10+。基础启动、模拟数据和校验链路仅使用标准库；个人 Excel 数据处理使用 pandas/openpyxl。
 
 ## 环境变量
 
 | 变量 | 默认值 | 说明 |
 |------|--------|------|
-| `SELF_MEDIA_DATA_ROOT` | `<项目根>/sample-data/self-media` | 数据根目录，指向你的 `dashboard-normalized` 所在的上级目录 |
+| `SELF_MEDIA_DATA_ROOT` | 空 | 可选外部数据根；未设置时读取 `config.json`，最终默认 `data/demo` |
+| `SELF_MEDIA_DATA_MODE` | 空 | 与外部数据根配合，可设为 `demo` 或 `user` |
 
 设置为真实数据目录即可切换数据源：
 
 ```powershell
-$env:SELF_MEDIA_DATA_ROOT = "D:\your-data\self-media"
+$env:SELF_MEDIA_DATA_ROOT = "<你的授权数据目录>"
+$env:SELF_MEDIA_DATA_MODE = "user"
 ```
 
 ## 脚本清单
+
+### generate_demo_data.py — 完整模拟数据
+
+从字段契约生成五个平台的模拟源文件和完整标准产物，不读取真实数据：
+
+```powershell
+python scripts/generate_demo_data.py
+```
 
 ### console_server.py — 本地 Web 服务
 
@@ -47,7 +57,7 @@ python scripts/daily_pipeline.py --stage report
 python scripts/daily_pipeline.py --stage screenshot
 ```
 
-- `--stage report`：生成 `runtime-data/reports/` 下的 Markdown 日报和 JSON 记录
+- `--stage report`：生成 `runtime-data/<mode>/reports/` 下的 Markdown 日报和 JSON 记录
 - `--stage screenshot`：调用 `capture_console_screenshot.js` 截取看板页面
 
 ### normalize-self-media-dashboard.py — 数据归一化（核心）
@@ -70,7 +80,7 @@ python scripts/normalize-self-media-dashboard.py
 校验归一化后数据的完整性和一致性（总粉丝=各平台之和、粉丝变化率、内容标题、收入非负等）。
 
 ```powershell
-python scripts/check-self-media-dashboard-contract.py
+python scripts/check-self-media-dashboard-contract.py --console-root .
 ```
 
 - 输入：`{DATA_ROOT}/dashboard-normalized/self_media_dashboard.json`
@@ -98,7 +108,7 @@ python scripts/build_attribution.py
 ```
 
 - 输入：`{DATA_ROOT}/dashboard-normalized/self_media_content_detail.csv`、抖音月度 XLSX
-- 输出：`runtime-data/console-state/attribution.json`
+- 输出：`runtime-data/<mode>/console-state/attribution.json`
 - 依赖：`openpyxl`（见 `requirements.txt`）
 
 ### capture_console_screenshot.js — 看板截图
@@ -128,6 +138,6 @@ node scripts/capture_console_screenshot.js http://127.0.0.1:8765/ output.png
                                         daily_pipeline.py → 日报 + 截图
 ```
 
-公开版已预置 `sample-data/` 虚拟数据和 `runtime-data/console-state/` 预生成结果，下载后直接运行 `console_server.py` 即可看到完整看板。
+公开版已预置 `data/demo/` 模拟数据和 `runtime-data/demo/console-state/` 预生成结果，下载后直接运行 `launch_console.py` 即可看到完整看板。
 
-如要使用自己的真实数据，请按 `docs/数据采集指南.md` 采集各平台数据，设置 `SELF_MEDIA_DATA_ROOT` 环境变量，然后依次运行 normalize → contract check → build_compact。
+如要使用自己的真实数据，请按 `docs/数据采集指南.md` 放入 `data/user/`，在 `config.json` 选择 user 模式，然后依次运行 normalize → contract check → build_compact。

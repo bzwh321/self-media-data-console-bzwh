@@ -1,0 +1,8 @@
+{
+  "schema": "self-media-sync-report.v1",
+  "status": "skipped",
+  "data_mode": "demo",
+  "generated_at": "2026-08-09T21:21:02+08:00",
+  "source": "synthetic_generator",
+  "message": "模拟模式不执行服务器同步。"
+}

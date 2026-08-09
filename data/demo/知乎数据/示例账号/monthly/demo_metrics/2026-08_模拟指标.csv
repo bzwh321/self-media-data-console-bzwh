@@ -1,0 +1,10 @@
+﻿platform,platform_name,date,new_followers,lost_followers,net_followers,gross_revenue,refund_amount,net_revenue,content_count,views,exposure,likes,comments,favorites,shares,coins,danmaku,quality_note,source_file,source_mtime
+zhihu,知乎,2026-08-01,10,3,7,0.0,0.0,0.0,0,1923,2596,75,12,21,8,0,0,synthetic_demo,data/demo/知乎数据/示例账号/monthly/demo_metrics/2026-08_模拟指标.csv,2026-08-01T12:00:00+08:00
+zhihu,知乎,2026-08-02,8,3,5,0.0,0.0,0.0,1,1984,2678,77,12,22,8,0,0,synthetic_demo,data/demo/知乎数据/示例账号/monthly/demo_metrics/2026-08_模拟指标.csv,2026-08-02T12:00:00+08:00
+zhihu,知乎,2026-08-03,13,3,10,0.0,0.0,0.0,0,2005,2707,78,12,22,8,0,0,synthetic_demo,data/demo/知乎数据/示例账号/monthly/demo_metrics/2026-08_模拟指标.csv,2026-08-03T12:00:00+08:00
+zhihu,知乎,2026-08-04,9,1,8,0.0,0.0,0.0,0,1938,2616,76,12,21,8,0,0,synthetic_demo,data/demo/知乎数据/示例账号/monthly/demo_metrics/2026-08_模拟指标.csv,2026-08-04T12:00:00+08:00
+zhihu,知乎,2026-08-05,5,1,4,0.0,0.0,0.0,1,1928,2603,75,12,21,8,0,0,synthetic_demo,data/demo/知乎数据/示例账号/monthly/demo_metrics/2026-08_模拟指标.csv,2026-08-05T12:00:00+08:00
+zhihu,知乎,2026-08-06,8,0,8,0.0,0.0,0.0,0,2017,2723,79,12,22,8,0,0,synthetic_demo,data/demo/知乎数据/示例账号/monthly/demo_metrics/2026-08_模拟指标.csv,2026-08-06T12:00:00+08:00
+zhihu,知乎,2026-08-07,12,3,9,0.0,0.0,0.0,0,1955,2639,76,12,22,8,0,0,synthetic_demo,data/demo/知乎数据/示例账号/monthly/demo_metrics/2026-08_模拟指标.csv,2026-08-07T12:00:00+08:00
+zhihu,知乎,2026-08-08,12,3,9,0.0,0.0,0.0,1,1979,2672,77,12,22,8,0,0,synthetic_demo,data/demo/知乎数据/示例账号/monthly/demo_metrics/2026-08_模拟指标.csv,2026-08-08T12:00:00+08:00
+zhihu,知乎,2026-08-09,5,1,4,0.0,0.0,0.0,0,2061,2782,80,12,23,8,0,0,synthetic_demo,data/demo/知乎数据/示例账号/monthly/demo_metrics/2026-08_模拟指标.csv,2026-08-09T12:00:00+08:00

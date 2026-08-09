@@ -1,5 +1,18 @@
 {
   "_comment": "复制为 config.json 后填写本地私有配置。不要提交 config.json。",
+  "data": {
+    "mode": "demo",
+    "root": ""
+  },
+  "profile": {
+    "display_name": "你的品牌或账号别名",
+    "timezone": "Asia/Shanghai",
+    "active_platforms": ["xhs", "douyin", "zhihu", "bili", "wechat"],
+    "monthly_goals": {
+      "new_fans": 2000,
+      "revenue": 30000
+    }
+  },
   "ai_api_url": "",
   "ai_api_key": "",
   "ai_model": "",

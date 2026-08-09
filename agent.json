@@ -2,24 +2,26 @@
   "schema": "agent.v1",
   "name": "self-media-console-director",
   "display_name": "自媒体数据中控台主 Agent",
-  "description": "基于虚拟或授权数据，编排本地自媒体工作台、准确性反馈、日报截图和可选消息推送。",
+  "description": "默认用模拟数据启动，并引导使用者安全接入个人自媒体数据、生成本地工作台和日报。",
   "entry": "AGENTS.md",
   "project_root": ".",
   "principles": [
-    "虚拟数据优先",
+    "下载后模拟数据直接可用",
+    "模拟数据与个人数据严格隔离",
+    "首次运行主动提示个人化清单",
     "本地产品化展示",
     "日常结论规则生成",
     "异常透明反馈",
     "不提交私密配置"
   ],
   "inputs": {
-    "dashboard_json": "sample-data/self-media/dashboard-normalized/self_media_dashboard.json",
-    "business_check": "sample-data/self-media/dashboard-normalized/latest_business_check.json",
-    "server_sync_report": "sample-data/self-media/dashboard-normalized/server_sync_refresh_report.json"
+    "dashboard_json": "data/demo/dashboard-normalized/self_media_dashboard.json",
+    "business_check": "data/demo/dashboard-normalized/latest_business_check.json",
+    "server_sync_report": "data/demo/dashboard-normalized/server_sync_refresh_report.json"
   },
   "outputs": {
-    "reports": "runtime-data/reports",
-    "screenshots": "runtime-data/screenshots",
-    "logs": "runtime-data/logs"
+    "reports": "runtime-data/<mode>/reports",
+    "screenshots": "runtime-data/<mode>/screenshots",
+    "logs": "runtime-data/<mode>/logs"
   }
 }

@@ -5,16 +5,20 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
-import re
 import sys
 from datetime import date, datetime, timedelta
 from pathlib import Path
 from typing import Any
 
+SCRIPT_DIR = Path(__file__).resolve().parent
+if str(SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_DIR))
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
-DATA_ROOT = Path(os.environ.get("SELF_MEDIA_DATA_ROOT", str(PROJECT_ROOT / "sample-data" / "self-media")))
+from data_paths import PROJECT_ROOT, load_project_config, portable_path, resolve_data_context
+
+
+DATA_CONTEXT = resolve_data_context()
+DATA_ROOT = DATA_CONTEXT.root
 DASHBOARD_DIR = DATA_ROOT / "dashboard-normalized"
 EXPECTED_PLATFORMS = {"xhs", "douyin", "zhihu", "bili", "wechat"}
 REVENUE_PLATFORMS = {"xhs", "bili"}
@@ -62,6 +66,15 @@ def compact_money(value: float) -> float:
 
 def platform_ids(dashboard: dict[str, Any]) -> list[str]:
     return [item.get("id") for item in dashboard.get("platforms", []) if item.get("id")]
+
+
+def configured_platforms() -> set[str]:
+    if DATA_CONTEXT.is_demo:
+        return EXPECTED_PLATFORMS
+    profile = load_project_config().get("profile") or {}
+    selected = profile.get("active_platforms") if isinstance(profile, dict) else []
+    valid = {str(item) for item in selected if str(item) in EXPECTED_PLATFORMS}
+    return valid or EXPECTED_PLATFORMS
 
 
 def rows_in_period(dashboard: dict[str, Any], start: str, end: str) -> list[dict[str, Any]]:
@@ -130,44 +143,37 @@ def compute_expected_kpis(
 
 
 def check_renderer_contract(console_root: Path) -> dict[str, Any]:
-    renderer = console_root / "app" / "renderer" / "self-media-dashboard.html"
+    renderer = console_root / "console" / "app.js"
     errors: list[str] = []
     evidence: dict[str, bool] = {
         "renderer_exists": renderer.exists(),
-        "new_fans_uses_range_daily_total": False,
-        "revenue_uses_range_revenue_total": False,
-        "range_revenue_uses_snapshot": False,
+        "kpi_uses_filtered_daily": False,
+        "new_fans_uses_daily_net_followers": False,
+        "revenue_uses_daily_net_revenue": False,
     }
     if not renderer.exists():
         return {
             "status": "failed",
-            "path": str(renderer),
+            "path": portable_path(renderer),
             "errors": [f"missing renderer: {renderer}"],
             "evidence": evidence,
         }
 
     text = renderer.read_text(encoding="utf-8")
-    evidence["new_fans_uses_range_daily_total"] = bool(
-        re.search(r"const\s+newFans\s*=\s*rangeDailyTotal\(\s*[\"']fans[\"']\s*\)", text)
-    )
-    evidence["revenue_uses_range_revenue_total"] = bool(
-        re.search(r"const\s+revenue\s*=\s*rangeRevenueTotal\(\s*\)", text)
-    )
-    evidence["range_revenue_uses_snapshot"] = (
-        "function rangeRevenueForPlatform" in text
-        and "revenueSnapshot" in text
-    )
+    evidence["kpi_uses_filtered_daily"] = "var daily = filteredDaily();" in text
+    evidence["new_fans_uses_daily_net_followers"] = "netFollowers += safe(m.net_followers);" in text
+    evidence["revenue_uses_daily_net_revenue"] = "netRevenue += safe(m.net_revenue);" in text
 
-    if not evidence["new_fans_uses_range_daily_total"]:
-        errors.append("new fans KPI must use selected-range daily fan growth")
-    if not evidence["revenue_uses_range_revenue_total"]:
-        errors.append("revenue KPI must use selected-range revenue contract")
-    if not evidence["range_revenue_uses_snapshot"]:
-        errors.append("xhs rolling revenue snapshot is not wired into the renderer")
+    if not evidence["kpi_uses_filtered_daily"]:
+        errors.append("KPI must use the selected-period daily rows")
+    if not evidence["new_fans_uses_daily_net_followers"]:
+        errors.append("new fans KPI must use daily net_followers")
+    if not evidence["revenue_uses_daily_net_revenue"]:
+        errors.append("revenue KPI must use daily net_revenue")
 
     return {
         "status": "failed" if errors else "passed",
-        "path": str(renderer),
+        "path": portable_path(renderer),
         "errors": errors,
         "evidence": evidence,
     }
@@ -183,7 +189,8 @@ def check_data_contract(
     warnings: list[str] = []
 
     actual_platforms = set(platform_ids(dashboard))
-    missing_platforms = sorted(EXPECTED_PLATFORMS - actual_platforms)
+    expected_platforms = configured_platforms()
+    missing_platforms = sorted(expected_platforms - actual_platforms)
     checks.append({
         "id": "expected_platforms_present",
         "status": "failed" if missing_platforms else "passed",
@@ -196,10 +203,10 @@ def check_data_contract(
     server_sync_selected = int(fusion.get("server_sync_selected") or 0)
     checks.append({
         "id": "server_sync_files_selected",
-        "status": "failed" if server_sync_selected <= 0 else "passed",
+        "status": "skipped" if DATA_CONTEXT.is_demo else ("failed" if server_sync_selected <= 0 else "passed"),
         "evidence": fusion,
     })
-    if server_sync_selected <= 0:
+    if not DATA_CONTEXT.is_demo and server_sync_selected <= 0:
         errors.append("server_sync_selected is zero")
 
     checks.append({
@@ -315,16 +322,17 @@ def main() -> int:
         "schema": "self-media-business-check.v1",
         "status": "failed" if errors else "ready",
         "checked_at": datetime.now().isoformat(timespec="seconds"),
-        "data_root": str(DATA_ROOT),
-        "dashboard_path": str(dashboard_path),
-        "summary_path": str(summary_path),
-        "console_root": str(console_root),
+        "data_mode": DATA_CONTEXT.mode,
+        "data_root": portable_path(DATA_ROOT),
+        "dashboard_path": portable_path(dashboard_path),
+        "summary_path": portable_path(summary_path),
+        "console_root": portable_path(console_root),
         "expected_kpis": expected,
         "checks": checks,
         "renderer_contract": renderer_contract,
         "warnings": warnings,
         "errors": errors,
-        "markdown_path": str(markdown_path),
+        "markdown_path": portable_path(markdown_path),
     }
     report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     write_markdown(report, markdown_path)

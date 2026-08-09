@@ -2,12 +2,25 @@
 config.json
 .env
 *.local
+.privacy.local.txt
+
+# personal data (keep only the documented directory skeleton)
+data/user/**
+!data/user/
+!data/user/README.md
+!data/user/**/
+!data/user/**/.gitkeep
 
 # runtime outputs
 runtime-data/logs/
 runtime-data/reports/
 runtime-data/screenshots/
 runtime-data/_stage/
+runtime-data/user/
+runtime-data/*/logs/
+runtime-data/*/reports/
+runtime-data/*/screenshots/
+runtime-data/*/_stage/
 *.log
 debug.log
 

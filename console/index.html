@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#2563EB">
 <title>自媒体数据中控台</title>
-<link rel="stylesheet" href="styles.css?v=20260807v9">
+<link rel="stylesheet" href="styles.css?v=20260809v10">
 </head>
 <body>
 <div class="app">
@@ -59,21 +59,21 @@
       </div>
       <div class="skin-item" data-theme="portal">
         <div class="skin-preview skin-portal">
-          <div class="skin-pv-label">传送门</div>
+          <div class="skin-pv-label">矩阵</div>
         </div>
         <div class="skin-info">
-          <div class="skin-name">瑞克与莫蒂</div>
-          <div class="skin-desc">科幻 · 绿黑金 · 疯狂</div>
+          <div class="skin-name">翡翠矩阵</div>
+          <div class="skin-desc">深色 · 荧光绿 · 数字感</div>
         </div>
         <div class="skin-check">✓</div>
       </div>
       <div class="skin-item" data-theme="endfield">
         <div class="skin-preview skin-endfield">
-          <div class="skin-pv-label">终末地</div>
+          <div class="skin-pv-label">信标</div>
         </div>
         <div class="skin-info">
-          <div class="skin-name">鹰角终末地</div>
-          <div class="skin-desc">硬边 · 黑黄 · 工业科幻</div>
+          <div class="skin-name">工业信标</div>
+          <div class="skin-desc">硬边 · 黑黄 · 工业感</div>
         </div>
         <div class="skin-check">✓</div>
       </div>
@@ -88,6 +88,13 @@
         <div class="skin-check">✓</div>
       </div>
     </div>
+  </div>
+
+  <!-- ===================== Data Mode ===================== -->
+  <div class="data-mode-banner demo" id="dataModeBanner">
+    <span class="data-mode-tag" id="dataModeTag">模拟数据</span>
+    <span class="data-mode-text" id="dataModeText">当前展示开箱示例，不代表真实经营结果。</span>
+    <code class="data-mode-path" id="dataModePath">data/demo</code>
   </div>
 
   <!-- ===================== Data Lag Banner ===================== -->
@@ -116,6 +123,7 @@
   <section class="exec-summary" id="execSummary">
     <div class="es-sentence" id="esSentence">载入中…</div>
     <div class="es-report" id="esReport"><!-- 3-4行完整报告，由 app.js 注入 --></div>
+    <button class="es-toggle" id="esToggle" type="button">展开详细分析</button>
     <div class="es-capsules" id="esCapsules"><!-- 4 个胶囊由 app.js 注入 --></div>
   </section>
 
@@ -612,7 +620,7 @@
 
 <script src="charts.js?v=20260807v"></script>
 <script src="bridge.js?v=20260806m2"></script>
-<script src="app.js?v=20260807v2"></script>
+<script src="app.js?v=20260809v3"></script>
 <script src="report-modal.js?v=20260806m"></script>
 <!-- 诊断条：定位问题后默认隐藏，有需要再打开（去掉 style.display 即可） -->
 <div id="dbg" style="position:fixed;bottom:0;left:0;right:0;background:#1a1a1a;color:#0f0;font-size:11px;padding:4px 8px;z-index:9998;font-family:monospace;white-space:pre-wrap;display:none;"></div>

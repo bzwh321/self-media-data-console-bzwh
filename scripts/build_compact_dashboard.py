@@ -19,13 +19,19 @@ from __future__ import annotations
 
 import csv
 import json
-import os
+import sys
 from datetime import datetime
 from collections import Counter
 from pathlib import Path
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
-DATA_ROOT = Path(os.environ.get("SELF_MEDIA_DATA_ROOT", str(PROJECT_ROOT / "sample-data" / "self-media")))
+SCRIPT_DIR = Path(__file__).resolve().parent
+if str(SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_DIR))
+
+from data_paths import PROJECT_ROOT, resolve_data_context
+
+DATA_CONTEXT = resolve_data_context()
+DATA_ROOT = DATA_CONTEXT.root
 DASH_DIR = DATA_ROOT / "dashboard-normalized"
 DASHBOARD_PATH = DASH_DIR / "self_media_dashboard.json"
 DETAIL_CSV = DASH_DIR / "self_media_content_detail.csv"
@@ -235,13 +241,15 @@ def main():
     totals = {
         "total_followers": sum(number(p.get("fans")) for p in platforms),
         "month_net_followers": sum(number(p.get("newFans")) for p in platforms),
-        "month_net_revenue": sum(number(p.get("revenue")) for p in platforms),
+        "month_net_revenue": round(sum(number(p.get("revenue")) for p in platforms), 2),
         "month_content_count": sum(number(p.get("posts")) for p in platforms),
         "month_views": sum(number(p.get("play")) for p in platforms),
         "month_interact": sum(number(p.get("interact")) for p in platforms),
     }
 
     compact = {
+        "schema": "self-media-compact-dashboard.v1",
+        "data_mode": dashboard.get("dataMode") or DATA_CONTEXT.mode,
         "generated_at": datetime.now().astimezone().isoformat(timespec="seconds"),
         "date_min": dashboard.get("dateMin") or "",
         "date_max": dashboard.get("dateMax") or "",
@@ -330,29 +338,30 @@ def main():
     print(f"  platforms: {len(compact['platforms'])}")
     print(f"  daily_metrics_recent30: {len(compact['daily_metrics_recent30'])} rows")
 
-    # ★ 校验：daily_metrics_recent30 中 8 月汇总（前端 computeKPIs 等价的独立校验）
+    # 校验：最近月份汇总（与前端 computeKPIs 等价的独立校验）
     recent = compact["daily_metrics_recent30"]
-    aug_rows = [r for r in recent if (r.get("date") or "") >= "2026-08-01"]
+    latest_month = str(compact.get("date_max") or "")[:7]
+    latest_rows = [r for r in recent if (r.get("date") or "").startswith(latest_month)]
     print()
-    print("  === 前端 computeKPIs 独立校验（从 daily_metrics_recent30 汇总） ===")
-    total_rev = sum(number(r.get("net_revenue")) for r in aug_rows)
-    total_views = sum(number(r.get("views")) for r in aug_rows)
+    print(f"  === {latest_month} 前端 computeKPIs 独立校验 ===")
+    total_rev = sum(number(r.get("net_revenue")) for r in latest_rows)
+    total_views = sum(number(r.get("views")) for r in latest_rows)
     # 先取 interact_total，再退化加 likes+favorites+comments+shares
     total_interact = sum(
         number(r.get("interact_total"))
         if number(r.get("interact_total")) > 0
         else number(r.get("likes")) + number(r.get("comments")) + number(r.get("favorites")) + number(r.get("shares"))
-        for r in aug_rows
+        for r in latest_rows
     )
-    total_posts = sum(number(r.get("content_count")) for r in aug_rows)
-    total_net_followers = sum(number(r.get("net_followers")) for r in aug_rows)
+    total_posts = sum(number(r.get("content_count")) for r in latest_rows)
+    total_net_followers = sum(number(r.get("net_followers")) for r in latest_rows)
     rate = (total_interact / total_views * 100) if total_views else 0
-    print(f"    8月 net_revenue sum: {total_rev:.2f}")
-    print(f"    8月 views sum:       {total_views:.0f}")
-    print(f"    8月 interact sum:    {total_interact:.0f}")
-    print(f"    8月 content_count:   {total_posts:.0f}")
-    print(f"    8月 net_followers:   {total_net_followers:.0f}")
-    print(f"    8月 互动率:          {rate:.2f}%")
+    print(f"    net_revenue sum: {total_rev:.2f}")
+    print(f"    views sum:       {total_views:.0f}")
+    print(f"    interact sum:    {total_interact:.0f}")
+    print(f"    content_count:   {total_posts:.0f}")
+    print(f"    net_followers:   {total_net_followers:.0f}")
+    print(f"    互动率:          {rate:.2f}%")
 
     print(f"\n  content_items_top: {len(top)} items")
     if top:
@@ -360,11 +369,8 @@ def main():
         print(f"  content_items_top date range: {pub_dates[0] if pub_dates else '-'} ~ {pub_dates[-1] if pub_dates else '-'}")
         plat_ct = Counter(it["platform"] for it in top)
         print(f"  content_items_top by platform: {dict(plat_ct)}")
-        # 8-5 之后的内容
-        aug5 = [x for x in top if (x.get("date") or "") >= "2026-08-05"]
-        print(f"  8-05 及以后 content_items_top: {len(aug5)} 条")
-        for x in aug5:
-            print(f"    {x.get('date')} {x.get('platform')} score>={x.get('heat')} {x.get('content_title','')[:18]}")
+        latest_items = [x for x in top if (x.get("date") or "").startswith(latest_month)]
+        print(f"  {latest_month} content_items_top: {len(latest_items)} 条")
 
 
 if __name__ == "__main__":

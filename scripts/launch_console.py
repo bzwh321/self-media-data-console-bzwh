@@ -19,8 +19,20 @@ import time
 import webbrowser
 from pathlib import Path
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
+SCRIPT_DIR = Path(__file__).resolve().parent
+if str(SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_DIR))
+
+from data_paths import (
+    PROJECT_ROOT,
+    ensure_user_skeleton,
+    missing_dashboard_files,
+    portable_path,
+    resolve_data_context,
+)
+
 SERVER_SCRIPT = PROJECT_ROOT / "scripts" / "console_server.py"
+DEMO_GENERATOR = PROJECT_ROOT / "scripts" / "generate_demo_data.py"
 DEFAULT_URL = "http://127.0.0.1:8765"
 DEFAULT_PORT = 8765
 PROBE_PATH = "/api/meta"
@@ -94,9 +106,32 @@ def open_browser(url: str) -> None:
     webbrowser.open(url)
 
 
+def prepare_data() -> bool:
+    """Prepare first-run data without ever mixing demo and personal files."""
+    ensure_user_skeleton()
+    context = resolve_data_context()
+    missing = missing_dashboard_files(context.root)
+    if not missing:
+        print(f"[console] Data mode: {context.mode} ({portable_path(context.root)})")
+        return True
+    if context.mode == "demo":
+        print("[console] Demo package is incomplete. Rebuilding synthetic data...")
+        completed = subprocess.run([sys.executable, str(DEMO_GENERATOR)], cwd=str(PROJECT_ROOT))
+        return completed.returncode == 0 and not missing_dashboard_files(context.root)
+    print(f"[error] Personal data package is incomplete: {portable_path(context.root)}")
+    for name in missing:
+        print(f"[missing] dashboard-normalized/{name}")
+    print("[hint] Follow data/user/README.md, then run normalize -> contract check -> build compact.")
+    return False
+
+
 def main() -> int:
     url = DEFAULT_URL
     port = DEFAULT_PORT
+
+    if not prepare_data():
+        input("Press Enter to exit...")
+        return 4
 
     print(f"[console] Probing {url}{PROBE_PATH} ...")
 

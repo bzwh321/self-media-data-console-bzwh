@@ -6,7 +6,7 @@
 - 抖音：monthly/content_list/*.xlsx（含"粉丝增量"字段，按作品取最新快照）
 - B站/公众号：平台后台不提供单内容涨粉归因，注明排除
 
-输出：runtime-data/console-state/attribution.json
+输出：runtime-data/{demo|user}/console-state/attribution.json
 
 归因方法（基于真实采集字段，非 AI 生成结论）：
 1. top_contents: 按单内容 new_followers 降序 Top N，计算涨粉贡献占比
@@ -17,25 +17,28 @@ from __future__ import annotations
 
 import csv
 import json
-import os
 import sys
 from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
 
+SCRIPT_DIR = Path(__file__).resolve().parent
+if str(SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_DIR))
+
+from data_paths import PROJECT_ROOT, resolve_data_context
+
 try:
     from openpyxl import load_workbook
 except ImportError:
-    print("ERROR: openpyxl 未安装，请运行 py -m pip install openpyxl", file=sys.stderr)
-    sys.exit(1)
+    load_workbook = None
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
-DATA_ROOT = Path(os.environ.get("SELF_MEDIA_DATA_ROOT", str(PROJECT_ROOT / "sample-data" / "self-media")))
+DATA_CONTEXT = resolve_data_context()
+DATA_ROOT = DATA_CONTEXT.root
 DASHBOARD_DIR = DATA_ROOT / "dashboard-normalized"
 DETAIL_CSV = DASHBOARD_DIR / "self_media_content_detail.csv"
-DOUYIN_MONTHLY_DIR = DATA_ROOT / "douyin" / "monthly" / "content_list"
-DOUYIN_RAW_DIR = DATA_ROOT / "douyin" / "raw" / "content_list"
-OUTPUT_PATH = PROJECT_ROOT / "runtime-data" / "console-state" / "attribution.json"
+DOUYIN_ROOT = DATA_ROOT / "抖音数据"
+OUTPUT_PATH = PROJECT_ROOT / "runtime-data" / DATA_CONTEXT.mode / "console-state" / "attribution.json"
 
 TOP_N = 20
 
@@ -140,8 +143,10 @@ def load_douyin_attribution() -> dict:
     合并 monthly 聚合文件 + raw 分片（raw 含最新月份），按 (title, publish)
     去重取最新快照，确保归因覆盖到最新月份数据。
     """
-    monthly_files = sorted(DOUYIN_MONTHLY_DIR.glob("*.xlsx")) if DOUYIN_MONTHLY_DIR.exists() else []
-    raw_files = sorted(DOUYIN_RAW_DIR.rglob("*.xlsx")) if DOUYIN_RAW_DIR.exists() else []
+    if load_workbook is None:
+        return {"contents": [], "total_new_followers": 0}
+    monthly_files = sorted(DOUYIN_ROOT.glob("*/monthly/content_list/*.xlsx")) if DOUYIN_ROOT.exists() else []
+    raw_files = sorted(DOUYIN_ROOT.glob("*/raw/content_list/**/*.xlsx")) if DOUYIN_ROOT.exists() else []
     xlsx_files = monthly_files + raw_files
     if not xlsx_files:
         return {"contents": [], "total_new_followers": 0}
@@ -292,6 +297,7 @@ def build_attribution() -> dict:
 
     return {
         "schema": "attribution.v1",
+        "data_mode": DATA_CONTEXT.mode,
         "generatedAt": datetime.now().astimezone().isoformat(timespec="seconds"),
         "method": "基于内容级 new_followers 字段（小红书涨粉/抖音粉丝增量），按最新快照取值，非AI生成",
         "grand_total_new_followers": round(grand_total),

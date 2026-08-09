@@ -13,12 +13,13 @@ Use this skill when working on the self-media data console public template: dash
 - Keep real tokens, cookies, browser profiles, `open_id`, `chat_id`, and local paths outside the repository.
 - Prefer deterministic rules for daily report conclusions.
 - Make chart and dashboard changes in the smallest layer that owns the behavior.
-- Preserve traceability: every metric should map back to `sample-data` or the configured data root.
+- Preserve traceability: every metric should map back to `data/demo` or the configured personal data root.
 
 ## Workflow
 
 1. Data contract
-   - Read `sample-data/self-media/dashboard-normalized/compact_dashboard_data.json`.
+   - Read `data/demo/dashboard-normalized/compact_dashboard_data.json` by default.
+   - Before personal-data work, tell the user to fill `config.json` profile fields and place exports under `data/user/`.
    - Keep platform fields stable: `platform`, `platform_name`, `month_net_followers`, `month_net_revenue`, `month_content_count`, `month_views`.
    - Add new fields to sample data before wiring UI.
 
@@ -34,8 +35,8 @@ Use this skill when working on the self-media data console public template: dash
    - Do not hardcode business data inside a skin.
 
 4. Hotlist collection
-   - Use `runtime-data/console-state/hotlist.json` for local saved items.
-   - Use `sample-data/hotlist/normalized/hotlist_latest.json` as the public demo source.
+   - Use `runtime-data/<mode>/console-state/hotlist.json` for mode-isolated local saved items.
+   - Use `data/demo/hotlist/normalized/hotlist_latest.json` as the public demo source.
    - Real platform collection must live outside the public repo or be documented as an optional adapter.
 
 5. Trae plugins

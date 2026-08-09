@@ -1,7 +1,6 @@
 import csv
 import json
 import math
-import os
 import re
 import sys
 import warnings
@@ -11,15 +10,17 @@ from pathlib import Path
 
 import pandas as pd
 
+SCRIPT_DIR = Path(__file__).resolve().parent
+if str(SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_DIR))
+
+from data_paths import resolve_data_context
+
 
 warnings.filterwarnings("ignore", category=UserWarning, module="openpyxl")
 
-DATA_ROOT = Path(
-    os.environ.get(
-        "SELF_MEDIA_DATA_ROOT",
-        str(Path(__file__).resolve().parents[1] / "sample-data" / "self-media"),
-    )
-)
+DATA_CONTEXT = resolve_data_context()
+DATA_ROOT = DATA_CONTEXT.root
 OUT_DIR = DATA_ROOT / "dashboard-normalized"
 DATA_CONTRACT_VERSION = 9
 SERVER_SYNC_DIR_NAME = "\u670d\u52a1\u5668\u540c\u6b65"
@@ -1539,6 +1540,11 @@ def build():
 
 
 def main():
+    if DATA_CONTEXT.is_demo:
+        raise RuntimeError(
+            "当前是 demo 模式。模拟数据请运行 scripts/generate_demo_data.py；"
+            "个人数据请在 config.json 中把 data.mode 设为 user。"
+        )
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     daily_rows, snapshots, content_rows, content_detail_rows, summary = build()
     dashboard = build_dashboard_payload(daily_rows, snapshots, content_rows, summary)

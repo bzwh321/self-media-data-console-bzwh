@@ -25,7 +25,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
 import re
 import shutil
 import subprocess
@@ -41,17 +40,31 @@ from urllib.parse import urlparse, parse_qs
 from urllib.request import Request, urlopen
 from urllib.error import URLError, HTTPError
 
+SCRIPT_DIR = Path(__file__).resolve().parent
+if str(SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_DIR))
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
+from data_paths import (
+    PROJECT_ROOT,
+    ensure_user_skeleton,
+    hotlist_path,
+    load_project_config,
+    missing_dashboard_files,
+    portable_path,
+    resolve_data_context,
+)
+
+
 CONSOLE_DIR = PROJECT_ROOT / "console"
-DATA_ROOT = Path(os.environ.get("SELF_MEDIA_DATA_ROOT", str(PROJECT_ROOT / "sample-data" / "self-media")))
+DATA_CONTEXT = resolve_data_context()
+DATA_ROOT = DATA_CONTEXT.root
 DASHBOARD_DIR = DATA_ROOT / "dashboard-normalized"
 DASHBOARD_PATH = DASHBOARD_DIR / "self_media_dashboard.json"
 COMPACT_DASHBOARD_PATH = DASHBOARD_DIR / "compact_dashboard_data.json"
 BUSINESS_CHECK_PATH = DASHBOARD_DIR / "latest_business_check.json"
 SERVER_SYNC_REPORT_PATH = DASHBOARD_DIR / "server_sync_refresh_report.json"
 
-RUNTIME_DIR = PROJECT_ROOT / "runtime-data"
+RUNTIME_DIR = PROJECT_ROOT / "runtime-data" / DATA_CONTEXT.mode
 STATE_DIR = RUNTIME_DIR / "console-state"
 HOTLIST_PATH = STATE_DIR / "hotlist.json"
 ATTRIBUTION_PATH = STATE_DIR / "attribution.json"
@@ -177,8 +190,28 @@ def load_meta() -> dict:
         status = "partial"
     else:
         status = "ready"
+    config = load_project_config()
+    profile = config.get("profile") if isinstance(config.get("profile"), dict) else {}
+    active_platforms = profile.get("active_platforms") if isinstance(profile.get("active_platforms"), list) else []
+    onboarding_missing = []
+    if not str(profile.get("display_name") or "").strip():
+        onboarding_missing.append("展示名称或品牌别名")
+    if not active_platforms:
+        onboarding_missing.append("启用平台")
+    if DATA_CONTEXT.mode == "user":
+        onboarding_missing.extend(
+            f"dashboard-normalized/{name}" for name in missing_dashboard_files(DATA_ROOT)
+        )
     return {
         "status": status,
+        "data_mode": DATA_CONTEXT.mode,
+        "is_demo": DATA_CONTEXT.is_demo,
+        "data_root": portable_path(DATA_ROOT),
+        "onboarding": {
+            "complete": not onboarding_missing and DATA_CONTEXT.mode == "user",
+            "missing": onboarding_missing,
+            "guide": "data/user/README.md",
+        },
         "sync_status": sync_status,
         "business_status": business_status,
         "generated_at": dashboard.get("generated_at"),
@@ -226,12 +259,8 @@ def suggest_hotlist(keyword: str = "数据分析") -> list:
     优先读取服务器采集的真实数据（hotlist_latest.json），
     回退到精选话题库（标注 source=curated）。
     """
-    import pathlib
-
     # 1) 尝试读取服务器采集的真实数据
-    hotlist_data_paths = [
-        pathlib.Path(os.environ.get("HOTLIST_DATA_PATH", str(PROJECT_ROOT / "sample-data" / "hotlist" / "normalized" / "hotlist_latest.json"))),
-    ]
+    hotlist_data_paths = [hotlist_path(DATA_CONTEXT)]
     for p in hotlist_data_paths:
         if p.exists():
             try:
@@ -926,6 +955,7 @@ def main() -> int:
     parser.add_argument("--port", type=int, default=8765, help="监听端口，默认 8765")
     args = parser.parse_args()
 
+    ensure_user_skeleton()
     ensure_dirs()
 
     # 启动时如果 hotlist 不存在，写入空数组占位

@@ -1,0 +1,213 @@
+{
+  "schema": "self-media-normalized.v1",
+  "data_mode": "demo",
+  "generated_at": "2026-08-09T21:21:02+08:00",
+  "source_root": "data/demo",
+  "normalized_dir": "data/demo/dashboard-normalized",
+  "date_min": "2026-07-11",
+  "date_max": "2026-08-09",
+  "latest_month": "2026-08",
+  "current_month_start": "2026-08-01",
+  "totals": {
+    "total_followers": 43035,
+    "month_net_followers": 280,
+    "month_net_revenue": 1242.66,
+    "month_content_count": 14
+  },
+  "platforms": [
+    {
+      "platform": "xhs",
+      "platform_name": "小红书",
+      "latest_total_followers": 12119,
+      "latest_total_followers_date": "2026-08-09",
+      "latest_daily_date": "2026-08-09",
+      "month_net_followers": 37,
+      "month_new_followers": 49,
+      "month_lost_followers": 12,
+      "month_net_revenue": 907.73,
+      "month_content_count": 3,
+      "month_views": 13072,
+      "freshness_status": "ready",
+      "freshness_issues": [],
+      "account_snapshots": [
+        {
+          "accountKey": "示例账号",
+          "latestDate": "2026-08-09",
+          "stalenessDays": 0,
+          "status": "ready",
+          "totalFollowers": 12119,
+          "sourceFile": "data/demo/小红书内容数据/示例账号/monthly/demo_metrics/2026-08_模拟指标.csv",
+          "sourceMtime": "2026-08-09T12:00:00+08:00"
+        }
+      ],
+      "content_snapshots": [
+        {
+          "accountKey": "示例账号",
+          "latestDate": "2026-08-09",
+          "stalenessDays": 0,
+          "status": "ready"
+        }
+      ],
+      "shop_latest_revenue_date": "2026-08-09"
+    },
+    {
+      "platform": "douyin",
+      "platform_name": "抖音",
+      "latest_total_followers": 8749,
+      "latest_total_followers_date": "2026-08-09",
+      "latest_daily_date": "2026-08-09",
+      "month_net_followers": 37,
+      "month_new_followers": 57,
+      "month_lost_followers": 20,
+      "month_net_revenue": 0.0,
+      "month_content_count": 2,
+      "month_views": 15106,
+      "freshness_status": "ready",
+      "freshness_issues": [],
+      "account_snapshots": [
+        {
+          "accountKey": "示例账号",
+          "latestDate": "2026-08-09",
+          "stalenessDays": 0,
+          "status": "ready",
+          "totalFollowers": 8749,
+          "sourceFile": "data/demo/抖音数据/示例账号/monthly/demo_metrics/2026-08_模拟指标.csv",
+          "sourceMtime": "2026-08-09T12:00:00+08:00"
+        }
+      ],
+      "content_snapshots": [
+        {
+          "accountKey": "示例账号",
+          "latestDate": "2026-08-09",
+          "stalenessDays": 0,
+          "status": "ready"
+        }
+      ],
+      "shop_latest_revenue_date": ""
+    },
+    {
+      "platform": "zhihu",
+      "platform_name": "知乎",
+      "latest_total_followers": 6645,
+      "latest_total_followers_date": "2026-08-09",
+      "latest_daily_date": "2026-08-09",
+      "month_net_followers": 64,
+      "month_new_followers": 82,
+      "month_lost_followers": 18,
+      "month_net_revenue": 0.0,
+      "month_content_count": 3,
+      "month_views": 17790,
+      "freshness_status": "ready",
+      "freshness_issues": [],
+      "account_snapshots": [
+        {
+          "accountKey": "示例账号",
+          "latestDate": "2026-08-09",
+          "stalenessDays": 0,
+          "status": "ready",
+          "totalFollowers": 6645,
+          "sourceFile": "data/demo/知乎数据/示例账号/monthly/demo_metrics/2026-08_模拟指标.csv",
+          "sourceMtime": "2026-08-09T12:00:00+08:00"
+        }
+      ],
+      "content_snapshots": [
+        {
+          "accountKey": "示例账号",
+          "latestDate": "2026-08-09",
+          "stalenessDays": 0,
+          "status": "ready"
+        }
+      ],
+      "shop_latest_revenue_date": ""
+    },
+    {
+      "platform": "bili",
+      "platform_name": "B站",
+      "latest_total_followers": 10052,
+      "latest_total_followers_date": "2026-08-09",
+      "latest_daily_date": "2026-08-09",
+      "month_net_followers": 70,
+      "month_new_followers": 91,
+      "month_lost_followers": 21,
+      "month_net_revenue": 334.93,
+      "month_content_count": 3,
+      "month_views": 19916,
+      "freshness_status": "ready",
+      "freshness_issues": [],
+      "account_snapshots": [
+        {
+          "accountKey": "示例账号",
+          "latestDate": "2026-08-09",
+          "stalenessDays": 0,
+          "status": "ready",
+          "totalFollowers": 10052,
+          "sourceFile": "data/demo/B站数据/示例账号/monthly/demo_metrics/2026-08_模拟指标.csv",
+          "sourceMtime": "2026-08-09T12:00:00+08:00"
+        }
+      ],
+      "content_snapshots": [
+        {
+          "accountKey": "示例账号",
+          "latestDate": "2026-08-09",
+          "stalenessDays": 0,
+          "status": "ready"
+        }
+      ],
+      "shop_latest_revenue_date": ""
+    },
+    {
+      "platform": "wechat",
+      "platform_name": "公众号",
+      "latest_total_followers": 5470,
+      "latest_total_followers_date": "2026-08-09",
+      "latest_daily_date": "2026-08-09",
+      "month_net_followers": 72,
+      "month_new_followers": 99,
+      "month_lost_followers": 27,
+      "month_net_revenue": 0.0,
+      "month_content_count": 3,
+      "month_views": 22299,
+      "freshness_status": "ready",
+      "freshness_issues": [],
+      "account_snapshots": [
+        {
+          "accountKey": "示例账号",
+          "latestDate": "2026-08-09",
+          "stalenessDays": 0,
+          "status": "ready",
+          "totalFollowers": 5470,
+          "sourceFile": "data/demo/公众号数据/示例账号/monthly/demo_metrics/2026-08_模拟指标.csv",
+          "sourceMtime": "2026-08-09T12:00:00+08:00"
+        }
+      ],
+      "content_snapshots": [
+        {
+          "accountKey": "示例账号",
+          "latestDate": "2026-08-09",
+          "stalenessDays": 0,
+          "status": "ready"
+        }
+      ],
+      "shop_latest_revenue_date": ""
+    }
+  ],
+  "row_counts": {
+    "daily_metrics": 150,
+    "platform_snapshots": 5,
+    "content_items": 20,
+    "content_detail_items": 20
+  },
+  "source_counts": {
+    "demo_generated_files": 5,
+    "file_fusion": {
+      "demo_selected": 5,
+      "server_sync_selected": 0
+    }
+  },
+  "content_snapshot_dates": {},
+  "notes": [
+    "全部账号、标题、数值和来源路径均为程序生成的模拟信息。",
+    "仅小红书和 B站包含收入；抖音、知乎、公众号收入固定为 0。",
+    "模拟数据与 data/user 个人数据不混合。"
+  ]
+}

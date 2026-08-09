@@ -1,0 +1,10 @@
+{
+  "schema": "self-media-refresh-check.v1",
+  "status": "ready",
+  "data_mode": "demo",
+  "generated_at": "2026-08-09T21:21:02+08:00",
+  "checks": [
+    "synthetic_generation",
+    "portable_paths"
+  ]
+}

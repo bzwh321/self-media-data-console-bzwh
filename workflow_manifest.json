@@ -1,7 +1,8 @@
 {
   "schema": "self-media-console-public.workflow.v1",
   "name": "self-media-data-console-public",
-  "data_root": "sample-data/self-media",
+  "data_root": "data/demo",
+  "personal_data_root": "data/user",
   "optional_integrations": [
     "Trae data-processing",
     "Trae business-ops-analysis",

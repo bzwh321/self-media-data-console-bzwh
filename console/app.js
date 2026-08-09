@@ -4,7 +4,7 @@
  * 职责：
  * - 通过 window.selfMediaBridge（preload 注入）调用主进程服务。
  * - 维护全局筛选状态，联动 KPI / 趋势 / 平台贡献 / 内容效率 / 收入分析 / 粉丝分布。
- * - 热榜收集与抽屉全量列表，状态标记通过主进程持久化到 runtime-data。
+ * - 热榜收集与抽屉全量列表，状态标记按数据模式持久化到 runtime-data/<mode>。
  * - 平台后台入口通过白名单跳转，不在渲染层拼接 URL。
  * ============================================================ */
 (function () {
@@ -2315,8 +2315,33 @@
   /* ============================================================
    * 初始化
    * ============================================================ */
+  function renderDataMode() {
+    var banner = document.getElementById('dataModeBanner');
+    if (!banner || !META) return;
+    var isDemo = META.data_mode !== 'user';
+    banner.classList.toggle('demo', isDemo);
+    banner.classList.toggle('user', !isDemo);
+    document.getElementById('dataModeTag').textContent = isDemo ? '模拟数据' : '个人数据';
+    document.getElementById('dataModeText').textContent = isDemo
+      ? '当前展示开箱示例。接入个人数据请按 data/user/README.md 操作。'
+      : '当前仅使用你的本地个人数据，不与模拟数据混合。';
+    document.getElementById('dataModePath').textContent = META.data_root || (isDemo ? 'data/demo' : 'data/user');
+  }
+
+  function initExecutiveSummaryToggle() {
+    var summary = document.getElementById('execSummary');
+    var toggle = document.getElementById('esToggle');
+    if (!summary || !toggle) return;
+    toggle.addEventListener('click', function () {
+      var expanded = summary.classList.toggle('expanded');
+      toggle.textContent = expanded ? '收起详细分析' : '展开详细分析';
+      toggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    });
+  }
+
   async function init() {
     initSkinSystem();
+    initExecutiveSummaryToggle();
     // 加载热榜
     HOTLIST = await bridge.getHotlist() || [];
     // 加载热榜搜索数据（抖音/小红书/B站"数据分析"搜索结果）
@@ -2327,6 +2352,7 @@
     // 加载数据
     var r = await bridge.getDashboard();
     META = await bridge.getMeta();
+    renderDataMode();
     if (r && r.ok && r.data) {
       D = r.data;
     }

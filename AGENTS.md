@@ -14,6 +14,15 @@
 - 记录每天运行结果，包括成功平台、缺失平台、过期数据、异常原因和需要人工处理的事项。
 - 当平台登录态失效、服务器不可达、字段口径变化时，停止自动发送“正常日报”，改发异常说明。
 
+## 首次运行门禁
+
+- 默认使用 `data/demo/` 的纯模拟数据，并明确标注“模拟数据模式”。
+- 主动提醒用户填写：展示名称或品牌别名、启用平台、平台账号目录名和平台导出文件。
+- 可选提醒：时区、月度目标、AI 配置和飞书接收人。
+- 个人业务文件固定进入 `data/user/`，详细结构见 `data/user/README.md`。
+- 不索取、不保存密码、Cookie、验证码、浏览器 Profile、token、SSH 密钥或平台登录态。
+- `data/user/dashboard-normalized/` 未通过校验前，不切换个人模式，不混入 `data/demo/` 数据。
+
 ## 不负责
 
 - 不破解验证码、短信验证、风控、登录限制。
@@ -26,7 +35,7 @@
 - `<DATA_ROOT>\dashboard-normalized\self_media_dashboard.json`
 - `<DATA_ROOT>\dashboard-normalized\latest_business_check.json`
 - `<DATA_ROOT>\dashboard-normalized\server_sync_refresh_report.json`
-- 本项目 `runtime-data` 下的历史运行记录和截图。
+- 本项目 `runtime-data/<mode>` 下按数据模式隔离的运行记录和截图。
 
 ## 输出
 

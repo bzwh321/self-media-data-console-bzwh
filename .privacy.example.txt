@@ -1,0 +1,2 @@
+# Copy to .privacy.local.txt and add private account names or local identifiers,
+# one term per line. The local file is ignored by Git.

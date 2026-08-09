@@ -9,7 +9,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
 import math
 import shutil
 import socket
@@ -20,14 +19,20 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any
 
+SCRIPT_DIR = Path(__file__).resolve().parent
+if str(SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_DIR))
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
-DATA_ROOT = Path(os.environ.get("SELF_MEDIA_DATA_ROOT", str(PROJECT_ROOT / "sample-data" / "self-media")))
+from data_paths import PROJECT_ROOT, resolve_data_context
+
+
+DATA_CONTEXT = resolve_data_context()
+DATA_ROOT = DATA_CONTEXT.root
 DASHBOARD_DIR = DATA_ROOT / "dashboard-normalized"
 DASHBOARD_PATH = DASHBOARD_DIR / "self_media_dashboard.json"
 BUSINESS_CHECK_PATH = DASHBOARD_DIR / "latest_business_check.json"
 SERVER_SYNC_REPORT_PATH = DASHBOARD_DIR / "server_sync_refresh_report.json"
-RUNTIME_DIR = PROJECT_ROOT / "runtime-data"
+RUNTIME_DIR = PROJECT_ROOT / "runtime-data" / DATA_CONTEXT.mode
 STATE_DIR = RUNTIME_DIR / "console-state"
 # 经营分析结果写入本项目 runtime-data（外部数据目录写权限受限），服务端和前端从 STATE_DIR 读取
 OPS_ANALYSIS_PATH = STATE_DIR / "business_ops_analysis.json"
@@ -44,7 +49,7 @@ DEFAULT_MONTHLY_GOALS = {
 }
 
 # 发布频率参考基线
-PUBLISH_BASELINE_DAILY_7M = 2.2  # 7月日均发布数基线（用于节奏对比）
+DEFAULT_PUBLISH_BASELINE_DAILY = 2.2
 
 
 def read_json(path: Path, fallback: Any = None) -> Any:
@@ -580,7 +585,7 @@ def _confidence_label(level: str) -> str:
 # 收入类型：知识付费 / 商单 / 平台激励
 # 成本类型：广告 / 稿费 / 运营成本
 # ============================================================
-MOCK_REVENUE_ENABLED = True  # 真实收入接入后改为 False
+MOCK_REVENUE_ENABLED = DATA_CONTEXT.is_demo
 
 REVENUE_TYPES = ["知识付费", "商单", "平台激励"]
 COST_TYPES = ["广告", "稿费", "运营成本"]
@@ -772,6 +777,16 @@ def build_business_ops_analysis(context: dict[str, Any]) -> dict[str, Any]:
     daily_metrics = compact.get("daily_metrics_recent30") or []
 
     goals = dict(DEFAULT_MONTHLY_GOALS)
+    profile = load_config().get("profile") or {}
+    configured_goals = profile.get("monthly_goals") if isinstance(profile, dict) else {}
+    if isinstance(configured_goals, dict):
+        goals.update({key: value for key, value in configured_goals.items() if key in goals})
+    publish_baseline_daily = number(configured_goals.get("publish_daily")) if isinstance(configured_goals, dict) else 0
+    if publish_baseline_daily <= 0:
+        publish_baseline_daily = DEFAULT_PUBLISH_BASELINE_DAILY
+    active_platforms = profile.get("active_platforms") if isinstance(profile, dict) else []
+    if not isinstance(active_platforms, list) or not active_platforms:
+        active_platforms = ["xhs", "douyin", "zhihu", "bili", "wechat"]
     today_iso = today_text()
     try:
         today_dt = datetime.strptime(today_iso, "%Y-%m-%d")
@@ -790,7 +805,7 @@ def build_business_ops_analysis(context: dict[str, Any]) -> dict[str, Any]:
     month_views_total = 0.0
 
     platform_contrib = []  # [{id, name, new_fans, revenue, content_count, views, fans_now}]
-    for pid in ["xhs", "douyin", "zhihu", "bili", "wechat"]:
+    for pid in active_platforms:
         cmp = cmp_by_id.get(pid) or {}
         raw = raw_by_id.get(pid) or {}
         nf = number(cmp.get("month_net_followers") or raw.get("newFans"))
@@ -1044,10 +1059,10 @@ def build_business_ops_analysis(context: dict[str, Any]) -> dict[str, Any]:
     # 3. 节奏偏慢（目标达成率 < 30% 且已过天数 > 当月 10%）
     if new_fans_goal > 0 and new_fans_rate < 0.3 and days_passed >= 3:
         # 最近 7 天发布数 vs 7 月基线
-        publish_ratio = (recent7_posts_daily / PUBLISH_BASELINE_DAILY_7M) if PUBLISH_BASELINE_DAILY_7M > 0 else 1.0
+        publish_ratio = (recent7_posts_daily / publish_baseline_daily) if publish_baseline_daily > 0 else 1.0
         assumption_parts = []
         if publish_ratio < 0.8:
-            assumption_parts.append(f"发布频率偏低（近 7 天日均 {recent7_posts_daily:.1f} vs 7 月基线 {PUBLISH_BASELINE_DAILY_7M}）")
+            assumption_parts.append(f"发布频率偏低（近 7 天日均 {recent7_posts_daily:.1f} vs 参考基线 {publish_baseline_daily}）")
         if top1_share < 0.3:
             assumption_parts.append("缺少爆款级传播内容")
         if not assumption_parts:
@@ -1058,7 +1073,7 @@ def build_business_ops_analysis(context: dict[str, Any]) -> dict[str, Any]:
             "problem": f"本月净增节奏偏慢：{new_fans_rate*100:.1f}% / 月目标 {int(new_fans_goal)}（需剩余日均 {new_fans_daily_needed:.0f} 粉）",
             "assumption": "；".join(assumption_parts),
             "actions": [
-                f"恢复 7 月发布节奏（当前 {recent7_posts_daily:.1f}/日 → 目标 {PUBLISH_BASELINE_DAILY_7M}/日）",
+                f"恢复参考发布节奏（当前 {recent7_posts_daily:.1f}/日 → 目标 {publish_baseline_daily}/日）",
                 "复用已验证爆款结构：复刻 Top1 文 3 个变体做 A/B 测试",
                 "建立每周一晚 30 分钟目标进度复盘机制",
             ],
@@ -1373,6 +1388,7 @@ def build_business_ops_analysis(context: dict[str, Any]) -> dict[str, Any]:
 
     return {
         "schema": "self-media-business-ops-analysis.v1",
+        "data_mode": DATA_CONTEXT.mode,
         "generated_at": now_text(),
         "goals": goals_with_targets,
         "meta": {
@@ -1389,7 +1405,7 @@ def build_business_ops_analysis(context: dict[str, Any]) -> dict[str, Any]:
             "mom_ratio": round(mom_ratio, 4),
             "inflection": inflection,
             "recent7_posts_daily": round(recent7_posts_daily, 2),
-            "publish_baseline_7m": PUBLISH_BASELINE_DAILY_7M,
+            "publish_baseline_daily": publish_baseline_daily,
         },
         "structure_analysis": {
             "platform_contribution": platform_contrib,  # 瀑布图用
@@ -1451,7 +1467,7 @@ def load_full_context_for_ops() -> dict[str, Any]:
     return {
         "dashboard": read_json(DASHBOARD_PATH, {}),
         "compact": read_json(compact_path, {}),
-        "attribution": read_json(PROJECT_ROOT / "runtime-data" / "console-state" / "attribution.json", {}),
+        "attribution": read_json(STATE_DIR / "attribution.json", {}),
     }
 
 

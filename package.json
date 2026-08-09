@@ -2,9 +2,11 @@
   "name": "self-media-data-console",
   "version": "0.1.0",
   "private": false,
-  "description": "A local self-media data dashboard demo with virtual data, skins, workflow docs, and Trae skills.",
+  "description": "A portable local self-media dashboard with isolated demo and personal data profiles.",
   "scripts": {
     "start": "python scripts/console_server.py",
+    "demo": "python scripts/generate_demo_data.py",
+    "check": "python tests/test_portable_setup.py && python scripts/check_public_safety.py",
     "report": "python scripts/daily_pipeline.py --stage report",
     "screenshot": "python scripts/daily_pipeline.py --stage screenshot"
   },

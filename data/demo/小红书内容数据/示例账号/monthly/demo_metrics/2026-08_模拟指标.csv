@@ -1,0 +1,10 @@
+﻿platform,platform_name,date,new_followers,lost_followers,net_followers,gross_revenue,refund_amount,net_revenue,content_count,views,exposure,likes,comments,favorites,shares,coins,danmaku,quality_note,source_file,source_mtime
+xhs,小红书,2026-08-01,3,2,1,139.48,11.16,0.0,1,1449,1956,51,9,16,6,0,0,synthetic_demo,data/demo/小红书内容数据/示例账号/monthly/demo_metrics/2026-08_模拟指标.csv,2026-08-01T12:00:00+08:00
+xhs,小红书,2026-08-02,10,3,7,108.59,8.69,0.0,0,1297,1751,45,8,14,5,0,0,synthetic_demo,data/demo/小红书内容数据/示例账号/monthly/demo_metrics/2026-08_模拟指标.csv,2026-08-02T12:00:00+08:00
+xhs,小红书,2026-08-03,2,3,-1,106.65,8.53,0.0,0,1414,1909,49,8,16,6,0,0,synthetic_demo,data/demo/小红书内容数据/示例账号/monthly/demo_metrics/2026-08_模拟指标.csv,2026-08-03T12:00:00+08:00
+xhs,小红书,2026-08-04,10,0,10,92.54,7.4,0.0,1,1398,1887,49,8,15,6,0,0,synthetic_demo,data/demo/小红书内容数据/示例账号/monthly/demo_metrics/2026-08_模拟指标.csv,2026-08-04T12:00:00+08:00
+xhs,小红书,2026-08-05,4,3,1,127.07,10.17,0.0,0,1426,1925,50,9,16,6,0,0,synthetic_demo,data/demo/小红书内容数据/示例账号/monthly/demo_metrics/2026-08_模拟指标.csv,2026-08-05T12:00:00+08:00
+xhs,小红书,2026-08-06,4,0,4,118.78,9.5,0.0,0,1470,1985,51,9,16,6,0,0,synthetic_demo,data/demo/小红书内容数据/示例账号/monthly/demo_metrics/2026-08_模拟指标.csv,2026-08-06T12:00:00+08:00
+xhs,小红书,2026-08-07,3,0,3,95.14,7.61,0.0,1,1509,2037,53,9,17,6,0,0,synthetic_demo,data/demo/小红书内容数据/示例账号/monthly/demo_metrics/2026-08_模拟指标.csv,2026-08-07T12:00:00+08:00
+xhs,小红书,2026-08-08,7,1,6,88.58,7.09,0.0,0,1529,2064,54,9,17,6,0,0,synthetic_demo,data/demo/小红书内容数据/示例账号/monthly/demo_metrics/2026-08_模拟指标.csv,2026-08-08T12:00:00+08:00
+xhs,小红书,2026-08-09,6,0,6,109.84,8.79,0.0,0,1580,2133,55,9,17,6,0,0,synthetic_demo,data/demo/小红书内容数据/示例账号/monthly/demo_metrics/2026-08_模拟指标.csv,2026-08-09T12:00:00+08:00

@@ -1,0 +1,119 @@
+{
+  "schema": "self-media-business-check.v1",
+  "status": "ready",
+  "checked_at": "2026-08-09T21:21:02",
+  "data_mode": "demo",
+  "data_root": "data/demo",
+  "dashboard_path": "data/demo/dashboard-normalized/self_media_dashboard.json",
+  "summary_path": "data/demo/dashboard-normalized/self_media_summary.json",
+  "console_root": ".",
+  "expected_kpis": {
+    "period_start": "2026-08-01",
+    "period_end": "2026-08-09",
+    "row_count": 9,
+    "total_followers": 43035,
+    "new_fans": 280,
+    "revenue": 1242.66,
+    "posts": 14,
+    "by_platform": [
+      {
+        "platform": "xhs",
+        "new_fans": 37,
+        "revenue": 907.73,
+        "posts": 3
+      },
+      {
+        "platform": "douyin",
+        "new_fans": 37,
+        "revenue": 0.0,
+        "posts": 2
+      },
+      {
+        "platform": "zhihu",
+        "new_fans": 64,
+        "revenue": 0.0,
+        "posts": 3
+      },
+      {
+        "platform": "bili",
+        "new_fans": 70,
+        "revenue": 334.93,
+        "posts": 3
+      },
+      {
+        "platform": "wechat",
+        "new_fans": 72,
+        "revenue": 0.0,
+        "posts": 3
+      }
+    ]
+  },
+  "checks": [
+    {
+      "id": "expected_platforms_present",
+      "status": "passed",
+      "evidence": {
+        "missing_platforms": [],
+        "actual_platforms": [
+          "bili",
+          "douyin",
+          "wechat",
+          "xhs",
+          "zhihu"
+        ]
+      }
+    },
+    {
+      "id": "server_sync_files_selected",
+      "status": "skipped",
+      "evidence": {
+        "demo_selected": 5,
+        "server_sync_selected": 0
+      }
+    },
+    {
+      "id": "audit_period_has_daily_rows",
+      "status": "passed",
+      "evidence": {
+        "period_start": "2026-08-01",
+        "period_end": "2026-08-09",
+        "row_count": 9
+      }
+    },
+    {
+      "id": "xhs_revenue_snapshot_available",
+      "status": "passed",
+      "evidence": {
+        "platform": "xhs",
+        "new_fans": 37,
+        "revenue": 907.73,
+        "posts": 3
+      }
+    },
+    {
+      "id": "range_kpi_not_platform_summary",
+      "status": "passed",
+      "evidence": {
+        "expected_range_new_fans": 280,
+        "platform_summary_new_fans": 280,
+        "expected_range_revenue": 1242.66,
+        "platform_summary_revenue": 1242.66,
+        "note": "selected-range KPI must use expected_range_* values, not platform_summary_* values"
+      }
+    }
+  ],
+  "renderer_contract": {
+    "status": "passed",
+    "path": "console/app.js",
+    "errors": [],
+    "evidence": {
+      "renderer_exists": true,
+      "kpi_uses_filtered_daily": true,
+      "new_fans_uses_daily_net_followers": true,
+      "revenue_uses_daily_net_revenue": true
+    }
+  },
+  "warnings": [],
+  "errors": [],
+  "markdown_path": "data/demo/dashboard-normalized/latest_business_check.md"
+}

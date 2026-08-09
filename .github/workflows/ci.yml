@@ -1,0 +1,22 @@
+name: verify-public-console
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Compile portable scripts
+        run: python -m py_compile scripts/data_paths.py scripts/generate_demo_data.py scripts/launch_console.py scripts/console_server.py scripts/build_compact_dashboard.py scripts/check-self-media-dashboard-contract.py
+      - name: Verify committed demo and privacy boundary
+        run: |
+          python tests/test_portable_setup.py
+          python scripts/check_public_safety.py
+      - name: Regenerate demo in a clean temporary root
+        run: python scripts/generate_demo_data.py --output "${{ runner.temp }}/self-media-demo"

@@ -1,0 +1,6 @@
+﻿platform,platform_name,account_key,date,total_followers,quality_note,source_file,source_mtime
+xhs,小红书,示例账号,2026-08-09,12119,synthetic_demo,data/demo/小红书内容数据/示例账号/monthly/demo_metrics/2026-08_模拟指标.csv,2026-08-09T12:00:00+08:00
+douyin,抖音,示例账号,2026-08-09,8749,synthetic_demo,data/demo/抖音数据/示例账号/monthly/demo_metrics/2026-08_模拟指标.csv,2026-08-09T12:00:00+08:00
+zhihu,知乎,示例账号,2026-08-09,6645,synthetic_demo,data/demo/知乎数据/示例账号/monthly/demo_metrics/2026-08_模拟指标.csv,2026-08-09T12:00:00+08:00
+bili,B站,示例账号,2026-08-09,10052,synthetic_demo,data/demo/B站数据/示例账号/monthly/demo_metrics/2026-08_模拟指标.csv,2026-08-09T12:00:00+08:00
+wechat,公众号,示例账号,2026-08-09,5470,synthetic_demo,data/demo/公众号数据/示例账号/monthly/demo_metrics/2026-08_模拟指标.csv,2026-08-09T12:00:00+08:00
