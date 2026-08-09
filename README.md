@@ -1,8 +1,14 @@
 # 自媒体数据中控台
 
-一个可在 Windows 桌面启动的本地自媒体经营工作台。下载后先用完整模拟数据查看成品，再按同一套目录规范接入自己的小红书、抖音、知乎、B站和公众号数据。
+一个在 Windows 本地运行的自媒体经营工作台。下载后可以直接查看模拟数据成品；接入自己的小红书、抖音、知乎、B站或公众号数据时，把项目交给能够读取本地文件和执行命令的 AI，让 AI 完成配置、整理和校验。
 
-项目把 `data/demo/` 和 `data/user/` 完全隔离，不包含知识星球数据，也不会把个人数据自动提交到 Git。
+项目严格隔离 `data/demo/` 与 `data/user/`，不包含知识星球数据，也不会把个人数据自动提交到 Git。
+
+## 先看模拟数据成品
+
+下载并完整解压项目后，双击根目录的 `open_console.bat`。浏览器打开后，页面顶部显示“模拟数据”和 `data/demo`，就说明项目已经可以使用。
+
+如果双击后提示没有 Python，把提示截图发给 AI，让 AI 根据你的电脑环境继续指导。不要自己修改项目文件。
 
 ## 皮肤效果
 
@@ -14,120 +20,87 @@
 
 ![工业信标皮肤下的自媒体数据中控台桌面看板](docs/screenshots/skin-industrial-beacon.webp)
 
-皮肤可以通过页面右上角的主题按钮随时切换，选择结果会保存在当前浏览器。
+页面右上角的主题按钮可以切换皮肤，选择结果会保存在当前浏览器。
 
-## 下载后如何使用
+## 让 AI 帮你接入个人数据
 
-### 方式一：下载 ZIP
-
-1. 打开本仓库页面，点击 `Code` → `Download ZIP`。
-2. 解压 ZIP，不要直接在压缩包预览窗口中运行。
-3. 确认电脑已安装 Python 3.10 或更高版本，并在安装时勾选 `Add Python to PATH`。
-4. 双击项目根目录的 `open_console.bat`。
-
-启动脚本会自动完成以下工作：
-
-1. 检查 Python 版本。
-2. 检查模拟数据，文件不完整时自动重新生成。
-3. 创建受 Git 保护的 `data/user/` 个人数据目录。
-4. 启动本地服务并打开 `http://127.0.0.1:8765/`。
-
-第一次打开时，页面顶部应显示：
+把解压后的项目文件夹作为工作区打开到支持本地文件和终端的 AI 编程工具，然后把下面整段提示词发给 AI。用户不需要自己编辑 JSON、创建数据目录或运行 Python 命令。
 
 ```text
-模拟数据 · 当前展示开箱示例 · data/demo
+请作为“自媒体数据中控台接入助手”，直接在当前项目中帮我完成个人数据接入，不要只给我命令或让我自己编辑配置文件。
+
+开始前请先完整阅读：
+- AGENTS.md
+- README.md
+- PERSONAL_SETUP_CHECKLIST.md
+- data/README.md
+- data/user/README.md
+- docs/数据采集指南.md
+- docs/自媒体看板字段映射对照表.md
+
+你的任务：
+1. 先检查项目、Python 环境和模拟数据能否正常启动；能安全执行的项目内操作直接执行。
+2. 用普通中文逐项问我：使用哪些平台、每个平台的公开账号别名、看板展示名称，以及是否需要月度涨粉或收入目标。不要让我填写平台代码或 JSON 字段。
+3. 根据我的回答，从 config.example.json 生成仅保存在本机的 config.json，切换到 user 模式，并创建对应的 data/user 平台目录。
+4. 只向我提供已启用平台的官方创作者后台网址，并告诉我需要导出哪些数据。登录、扫码、验证码和最终点击导出由我本人完成；不要索取或保存密码、Cookie、验证码、token、浏览器 Profile 或登录态。
+5. 我导出后，可以把文件拖进对话，或告诉你文件的完整路径。只有拿到我明确提供的文件或目录路径后，才检查文件并按项目规范整理到 data/user；不要扫描无关的个人目录。
+6. 检查文件类型和字段。如果缺少数据，用“平台 + 后台入口 + 缺少的导出项”告诉我，不要用内部字段名让我猜。
+7. 需要安装项目依赖时先说明用途；得到允许后再安装。随后直接运行规范化、契约校验、紧凑数据生成和启动流程。
+8. 只有个人数据契约通过后才切换个人看板；不得把 data/demo 与 data/user 混合。
+9. 最后运行隐私检查，并用中文汇报：已接入平台、使用的数据文件、仍缺少的数据、看板是否成功、个人数据保存位置。不要提交 config.json 或 data/user 中的个人文件到 Git。
+
+如果我还没有准备好信息，请先一次只问一个最容易回答的问题，从“你想接入哪些平台？”开始。
 ```
 
-这表示项目已经成功运行。基础看板只使用 Python 标准库，不需要先运行 `npm install`，也不需要配置 AI、飞书或其他外部服务。
+AI 最终应直接完成配置和脚本执行。用户只需要回答问题、本人登录平台后台，以及把下载好的文件交给 AI。
 
-### 方式二：Git 克隆
+## 各平台官方后台
 
-```powershell
-git clone https://github.com/bzwh321/self-media-data-console-bzwh.git
-cd self-media-data-console-bzwh
-python scripts\launch_console.py
-```
+先告诉 AI 你使用哪些平台。AI 只应让你进入对应后台，不应要求你理解项目内部的平台代码。
 
-如果端口 `8765` 被其他程序占用，启动器会停止并给出提示，不会替换或关闭其他进程。
+| 平台 | 官方创作者后台 | 用户在后台需要导出 | 导出后交给 AI |
+| --- | --- | --- | --- |
+| 小红书 | [小红书创作服务平台](https://creator.xiaohongshu.com/) | 账号概览、涨粉数据、内容分析；有店铺时再导出商家经营数据 | `.xlsx`、`.csv` 或后台原始导出文件 |
+| 抖音 | [抖音创作者中心](https://creator.douyin.com/) | 运营数据、作品数据；有需要时再导出主页数据 | 后台原始导出文件 |
+| B站 | [B站创作中心](https://member.bilibili.com/) | 粉丝数据、播放与互动数据；需要收入时再导出商品销售数据 | `.xlsx`、`.csv` 或后台原始导出文件 |
+| 知乎 | [知乎创作中心](https://www.zhihu.com/creator) | 关注者数据、内容数据 | `.xls` 或后台原始导出文件 |
+| 公众号 | [微信公众平台](https://mp.weixin.qq.com/) | 用户分析、内容分析或文章统计 | `.csv`、`.json` 或后台原始导出文件 |
 
-## 使用个人数据前要补充什么
+后台菜单名称可能随平台升级而变化。找不到对应入口时，把当前页面截图发给 AI，让 AI 根据页面继续指导；不要把账号密码或验证码发给 AI。
 
-完整的逐项勾选文件见 [`PERSONAL_SETUP_CHECKLIST.md`](PERSONAL_SETUP_CHECKLIST.md)。至少需要补充下面三类内容。
+## AI 会向你询问什么
 
-### 1. 本地配置路径
+AI 只需要下面这些业务信息，不需要真实身份资料：
 
-把根目录的 `config.example.json` 复制为 `config.json`：
+- 你使用的平台，例如“小红书和B站”。
+- 每个平台用于建立文件夹的公开昵称或自定义别名。
+- 看板上希望显示的名称。
+- 可选的月度净增粉丝目标和收入目标。
+- 已下载数据文件的附件，或你明确提供的文件完整路径。
 
-```powershell
-Copy-Item config.example.json config.json
-```
+如果暂时没有目标，直接回答“没有”；如果还没有导出文件，回答“请先告诉我去哪个后台导出什么”。完整对话清单见 [`PERSONAL_SETUP_CHECKLIST.md`](PERSONAL_SETUP_CHECKLIST.md)。
 
-`config.json` 已被 `.gitignore` 排除，只在本机保存。把其中的数据模式改为：
+## AI 完成后的结果
 
-```json
-{
-  "data": {
-    "mode": "user",
-    "root": ""
-  }
-}
-```
+AI 应完成并向你确认：
 
-`root` 留空时固定读取 `data/user/`；只有明确要把数据放在项目外部时，才填写你自己电脑上的绝对路径。
+1. 个人配置已写入本机的 `config.json`。
+2. 导出文件已按平台整理到 `data/user/`，或整理到你明确指定的外部授权目录。
+3. Python 数据处理、契约校验和看板生成已经运行。
+4. 页面顶部显示“个人数据”和 `data/user`，不再显示“模拟数据”。
+5. 缺失或无法识别的数据已按平台说明，没有静默补零或混入模拟数据。
+6. 隐私检查通过，个人文件没有进入 Git 提交范围。
 
-### 2. 个人信息
+## 隐私边界
 
-在 `config.json` 的 `profile` 中填写：
+- 登录、扫码、验证码和导出确认由用户本人完成。
+- 不向 AI 提供密码、Cookie、验证码、浏览器 Profile、平台登录态、token 或 SSH 密钥。
+- AI 只有在用户给出明确文件或目录路径后，才能读取并整理导出文件。
+- `config.json` 和 `data/user/` 中的业务文件默认被 Git 忽略。
+- 项目 Agent 不得在个人数据不完整时回退混用模拟数据。
 
-| 字段 | 是否必填 | 填写内容 |
-| --- | --- | --- |
-| `display_name` | 必填 | 品牌名、公开昵称或自定义别名，不要求真实姓名 |
-| `active_platforms` | 必填 | 只保留实际使用的平台代码 |
-| `timezone` | 可选 | 默认 `Asia/Shanghai` |
-| `monthly_goals.new_fans` | 可选 | 月度净增粉丝目标 |
-| `monthly_goals.revenue` | 可选 | 月度收入目标 |
-
-平台代码对应关系：
-
-| 平台 | 代码 |
-| --- | --- |
-| 小红书 | `xhs` |
-| 抖音 | `douyin` |
-| 知乎 | `zhihu` |
-| B站 | `bili` |
-| 公众号 | `wechat` |
-
-`ai_api_url`、`ai_api_key`、`ai_model` 和 `lark.recipients` 都是可选项。只看本地中控台时保持空白即可。
-
-### 3. 个人数据路径
-
-只需要为 `active_platforms` 中启用的平台补数据。`<账号别名>` 可以使用公开昵称或自定义名称。
-
-| 平台 | 建议放置路径 | 主要数据 |
-| --- | --- | --- |
-| 小红书 | `data/user/小红书内容数据/<账号别名>/raw/` | 粉丝增长、账号概览、内容分析 |
-| 抖音 | `data/user/抖音数据/<账号别名>/raw/` | 运营数据、作品列表、内容分析 |
-| 知乎 | `data/user/知乎数据/<账号别名>/raw/` | 关注者数据、内容分析 |
-| B站 | `data/user/B站数据/<账号别名>/raw/` | 粉丝数据、播放与互动数据 |
-| 公众号 | `data/user/公众号数据/<账号别名>/` | 用户统计、内容统计、文章统计 |
-
-可选经营数据放在：
-
-```text
-data/user/小红书电商数据/<店铺别名>/raw/datacenter_overview/YYYY-MM/
-data/user/小红书推广数据/<账号别名>/
-```
-
-原始导出建议继续按 `{数据类型}/YYYY-MM/` 分层。完整文件类型、后台导出入口和字段映射见：
-
-- [`data/README.md`](data/README.md)：数据目录总规范
-- [`data/user/README.md`](data/user/README.md)：个人数据放置示例
-- [`docs/数据采集指南.md`](docs/数据采集指南.md)：五个平台的导出步骤
-- [`docs/自媒体看板字段映射对照表.md`](docs/自媒体看板字段映射对照表.md)：字段映射与口径
-
-## 生成个人看板
-
-完成配置和文件放置后，在项目根目录运行：
+<details>
+<summary>仅供开发者和 AI：项目验证命令</summary>
 
 ```powershell
 pip install -r requirements.txt
@@ -135,30 +108,13 @@ python scripts\normalize-self-media-dashboard.py
 python scripts\check-self-media-dashboard-contract.py --console-root .
 python scripts\build_compact_dashboard.py
 python scripts\launch_console.py
+python tests\test_portable_setup.py
+python scripts\check_public_safety.py
 ```
 
-通过后，页面顶部应显示“个人数据”和 `data/user`。如果标准产物不完整，启动器会列出缺失文件并停止，不会回退到模拟数据。
+完整脚本说明见 [`scripts/README.md`](scripts/README.md)，数据结构见 [`data/README.md`](data/README.md)。
 
-## 隐私边界
-
-- 不要把密码、Cookie、验证码、浏览器 Profile、平台登录态、token 或 SSH 密钥放入仓库。
-- `config.json` 和 `data/user/` 中的业务文件默认被 Git 忽略。
-- `data/user/dashboard-normalized/` 由 Python 脚本生成，不要手工修改。
-- 发布前运行 `python scripts\check_public_safety.py`。
-
-项目 Agent 首次接入时只应询问展示别名、启用平台、账号目录名和平台导出文件；不得索取上述敏感凭据。
-
-## 常用命令
-
-| 命令 | 用途 |
-| --- | --- |
-| `python scripts\generate_demo_data.py` | 重新生成完整模拟数据 |
-| `python scripts\launch_console.py` | 准备数据、启动服务并打开浏览器 |
-| `python scripts\daily_pipeline.py --stage report` | 生成本地日报 |
-| `python tests\test_portable_setup.py` | 检查开箱数据与目录隔离 |
-| `python scripts\check_public_safety.py` | 检查公开文件中的敏感信息和本地路径 |
-
-完整脚本说明见 [`scripts/README.md`](scripts/README.md)。截图能力需要先运行 `npm install`，其他基础功能不需要 Node.js。
+</details>
 
 ## 贡献与许可
 
