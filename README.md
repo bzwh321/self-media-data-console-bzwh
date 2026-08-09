@@ -57,24 +57,40 @@ console/                 前端看板、图表、皮肤资源
 scripts/                 本地服务、日报流水线、截图脚本（详见 scripts/README.md）
 sample-data/             可公开的虚拟数据（开箱即用）
 runtime-data/console-state/  本地状态示例（归因、经营分析预生成）
-docs/                    产品、架构、皮肤、准确性和发布说明
+docs/                    产品、架构、采集指南、字段映射、皮肤、发布说明
 .trae/skills/            项目 Skill
 workflows/               日常流水线定义
-requirements.txt         Python 依赖（仅 openpyxl）
+requirements.txt         Python 依赖（pandas + openpyxl）
 ```
 
 ## 脚本说明
 
 | 脚本 | 用途 | 依赖 |
 |------|------|------|
+| `normalize-self-media-dashboard.py` | **核心**：各平台原始数据 → 标准看板数据 | pandas, openpyxl |
+| `check-self-media-dashboard-contract.py` | 数据契约校验 | 标准库 |
+| `build_compact_dashboard.py` | 派生看板紧凑数据 | 标准库 |
 | `console_server.py` | 本地 Web 服务 + JSON API | 标准库 |
 | `launch_console.py` | 桌面一键启动器 | 标准库 |
 | `daily_pipeline.py` | 日报生成 + 截图编排 | 标准库 |
-| `build_compact_dashboard.py` | 派生看板紧凑数据 | 标准库 |
 | `build_attribution.py` | 粉丝增长归因分析 | openpyxl |
 | `capture_console_screenshot.js` | 看板页面截图 | puppeteer |
 
 详见 `scripts/README.md`。
+
+## 使用自己的数据
+
+公开版默认使用 `sample-data/` 虚拟数据，开箱即用。如要接入自己的真实数据：
+
+1. 按 `docs/数据采集指南.md` 从各平台创作者后台导出数据
+2. 按指南中的目录约定存放原始文件
+3. 安装依赖：`pip install -r requirements.txt`
+4. 运行归一化：`python scripts/normalize-self-media-dashboard.py`
+5. 运行校验：`python scripts/check-self-media-dashboard-contract.py`
+6. 派生看板数据：`python scripts/build_compact_dashboard.py`
+7. 启动看板：`python scripts/console_server.py`
+
+字段映射规则见 `docs/自媒体看板字段映射对照表.md`，数据目录结构见 `docs/数据目录结构说明.md`。
 
 ## 数据安全
 

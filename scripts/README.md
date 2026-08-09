@@ -50,6 +50,33 @@ python scripts/daily_pipeline.py --stage screenshot
 - `--stage report`：生成 `runtime-data/reports/` 下的 Markdown 日报和 JSON 记录
 - `--stage screenshot`：调用 `capture_console_screenshot.js` 截取看板页面
 
+### normalize-self-media-dashboard.py — 数据归一化（核心）
+
+从各平台原始数据（CSV/XLSX/JSON）归一化为统一的标准看板数据。这是数据链路的核心脚本。
+
+```powershell
+pip install pandas openpyxl
+python scripts/normalize-self-media-dashboard.py
+```
+
+- 输入：`{DATA_ROOT}/` 下各平台目录（B站数据/、抖音数据/、小红书内容数据/ 等）
+- 输出：`{DATA_ROOT}/dashboard-normalized/` 下的 7 个标准文件
+- 依赖：`pandas`、`openpyxl`
+- 详细采集方法和目录约定见 `docs/数据采集指南.md`
+- 字段映射规则见 `docs/自媒体看板字段映射对照表.md`
+
+### check-self-media-dashboard-contract.py — 数据契约校验
+
+校验归一化后数据的完整性和一致性（总粉丝=各平台之和、粉丝变化率、内容标题、收入非负等）。
+
+```powershell
+python scripts/check-self-media-dashboard-contract.py
+```
+
+- 输入：`{DATA_ROOT}/dashboard-normalized/self_media_dashboard.json`
+- 输出：`{DATA_ROOT}/dashboard-normalized/latest_business_check.json`
+- 依赖：标准库
+
 ### build_compact_dashboard.py — 看板数据派生
 
 从 `self_media_dashboard.json` 派生 `compact_dashboard_data.json`，修复 net_revenue、interact_total、content_items_top 字段。
@@ -88,11 +115,19 @@ node scripts/capture_console_screenshot.js http://127.0.0.1:8765/ output.png
 ## 数据处理流程
 
 ```
-真实数据 → build_compact_dashboard.py → compact_dashboard_data.json
-                                           ↓
-                                     console_server.py → 前端看板
-                                           ↓
-                                     daily_pipeline.py → 日报 + 截图
+各平台创作者后台导出 → 按目录约定存放 → normalize-self-media-dashboard.py
+                                              ↓
+                                    dashboard-normalized/ (7个标准文件)
+                                              ↓
+                              check-self-media-dashboard-contract.py (校验)
+                                              ↓
+                              build_compact_dashboard.py → compact_dashboard_data.json
+                                              ↓
+                                        console_server.py → 前端看板
+                                              ↓
+                                        daily_pipeline.py → 日报 + 截图
 ```
 
 公开版已预置 `sample-data/` 虚拟数据和 `runtime-data/console-state/` 预生成结果，下载后直接运行 `console_server.py` 即可看到完整看板。
+
+如要使用自己的真实数据，请按 `docs/数据采集指南.md` 采集各平台数据，设置 `SELF_MEDIA_DATA_ROOT` 环境变量，然后依次运行 normalize → contract check → build_compact。
