@@ -1560,6 +1560,7 @@ html[data-theme="portal"]{
 }
 
 html[data-theme="portal"] body{
+  background-color:var(--page-bg);
   background-image:var(--theme-bg-overlay),var(--theme-bg-image);
   background-size:cover;
   background-position:center;
