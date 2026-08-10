@@ -41,6 +41,7 @@
 - `<DATA_ROOT>\dashboard-normalized\self_media_dashboard.json`
 - `<DATA_ROOT>\dashboard-normalized\latest_business_check.json`
 - `<DATA_ROOT>\dashboard-normalized\server_sync_refresh_report.json`
+- `<DATA_ROOT>\dashboard-normalized\latest_refresh_check.json`
 - 本项目 `runtime-data/<mode>` 下按数据模式隔离的运行记录和截图。
 
 ## 输出

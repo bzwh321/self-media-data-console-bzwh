@@ -1237,7 +1237,7 @@
   document.getElementById('btnRefresh').addEventListener('click', async function () {
     var btn = this;
     btn.classList.add('loading');
-    toast('正在刷新数据...');
+    toast('正在拉取服务器数据并检查...');
     try {
       var r = await bridge.refreshDashboard();
       if (r && r.ok) {
@@ -1247,8 +1247,15 @@
         renderBanner();
         // 经营分析 + 归因也一起刷新
         await Promise.all([loadOpsAnalysis(), loadAttribution()]);
-        toast('数据已刷新');
+        if (r.status === 'partial') {
+          toast('刷新完成，但有滞后数据，请查看数据检查', true);
+        } else {
+          toast('数据已刷新');
+        }
       } else {
+        META = await bridge.getMeta();
+        renderBanner();
+        renderDataPrep();
         toast('刷新失败：' + (r && r.error || '未知错误'), true);
       }
     } catch (e) {
@@ -2658,6 +2665,14 @@
       return (p.freshness_status || p.freshStatus) !== 'ready';
     });
     var items = [];
+    // 0) 🔴 阻断性：完整刷新链路失败
+    if (META && META.refresh_status === 'failed') {
+      items.push({
+        lv: 'red', title: '本次刷新未完成（阻断性）',
+        desc: (META.refresh_errors || []).join('；') || '服务器拉取、规范化或检查过程中出现错误。',
+        action: '建议：根据刷新错误修复服务器连接或数据文件后重新点击刷新'
+      });
+    }
     // 1) 🔴 阻断性：业务校验失败
     if (META && META.business_status && META.business_status !== 'ready' && META.business_status !== 'success') {
       items.push({

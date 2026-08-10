@@ -11,7 +11,7 @@
    - POST /api/hot                添加热榜条目
    - PUT  /api/hot/<id>           更新热榜条目状态
    - DELETE /api/hot/<id>        删除热榜条目
-   - POST /api/refresh            重新调用 daily_pipeline 生成最新数据
+   - POST /api/refresh            拉取/生成、规范化、校验并刷新数据
    - POST /api/report             生成 Markdown 报告并落盘
    - GET  /api/report/<id>       返回报告内容
    - GET  /api/platform-entries   返回各平台后台入口（白名单）
@@ -63,6 +63,8 @@ DASHBOARD_PATH = DASHBOARD_DIR / "self_media_dashboard.json"
 COMPACT_DASHBOARD_PATH = DASHBOARD_DIR / "compact_dashboard_data.json"
 BUSINESS_CHECK_PATH = DASHBOARD_DIR / "latest_business_check.json"
 SERVER_SYNC_REPORT_PATH = DASHBOARD_DIR / "server_sync_refresh_report.json"
+REFRESH_CHECK_PATH = DASHBOARD_DIR / "latest_refresh_check.json"
+REFRESH_PIPELINE = PROJECT_ROOT / "scripts" / "refresh_data.py"
 
 RUNTIME_DIR = PROJECT_ROOT / "runtime-data" / DATA_CONTEXT.mode
 STATE_DIR = RUNTIME_DIR / "console-state"
@@ -167,6 +169,7 @@ def load_meta() -> dict:
     dashboard = load_dashboard()
     business = read_json(BUSINESS_CHECK_PATH, {}) or {}
     sync_report = read_json(SERVER_SYNC_REPORT_PATH, {}) or {}
+    refresh_check = read_json(REFRESH_CHECK_PATH, {}) or {}
     platforms = []
     for p in dashboard.get("platforms") or []:
         platforms.append({
@@ -184,9 +187,10 @@ def load_meta() -> dict:
     stale = [p for p in platforms if p["freshness_status"] != "ready"]
     business_status = str(business.get("status") or "unknown")
     sync_status = str(sync_report.get("status") or "unknown")
-    if business_status not in {"ready", "success"}:
+    refresh_status = str(refresh_check.get("status") or "unknown")
+    if refresh_status == "failed" or business_status not in {"ready", "success"}:
         status = "failed"
-    elif stale:
+    elif stale or (DATA_CONTEXT.mode == "user" and sync_status not in {"ready", "success"}):
         status = "partial"
     else:
         status = "ready"
@@ -214,6 +218,9 @@ def load_meta() -> dict:
         },
         "sync_status": sync_status,
         "business_status": business_status,
+        "refresh_status": refresh_status,
+        "refresh_errors": refresh_check.get("errors") or [],
+        "refresh_checked_at": refresh_check.get("finished_at") or refresh_check.get("generated_at"),
         "generated_at": dashboard.get("generated_at"),
         "date_min": dashboard.get("date_min"),
         "date_max": dashboard.get("date_max"),
@@ -679,22 +686,36 @@ def generate_report(payload: dict) -> dict:
 
 
 def refresh_dashboard() -> dict:
-    """重新调用 daily_pipeline 生成最新工作台数据。"""
-    pipeline = PROJECT_ROOT / "scripts" / "daily_pipeline.py"
-    if not pipeline.exists():
-        return {"ok": False, "error": "未找到 daily_pipeline.py"}
+    """运行拉取/生成、规范化、校验和看板派生的完整刷新链路。"""
+    if not REFRESH_PIPELINE.exists():
+        return {"ok": False, "error": "未找到 refresh_data.py"}
     try:
-        subprocess.run(
-            [sys.executable, str(pipeline), "--stage", "report"],
+        completed = subprocess.run(
+            [sys.executable, str(REFRESH_PIPELINE)],
             check=False,
             cwd=str(PROJECT_ROOT),
             capture_output=True,
             text=True,
-            timeout=120,
+            encoding="utf-8",
+            errors="replace",
+            timeout=2100,
         )
     except Exception as exc:
         return {"ok": False, "error": f"流水线执行失败：{exc}"}
-    return {"ok": True, "data": load_dashboard()}
+    if completed.returncode != 0:
+        refresh_check = read_json(REFRESH_CHECK_PATH, {}) or {}
+        errors = refresh_check.get("errors") or []
+        detail = "；".join(str(item) for item in errors if str(item).strip())
+        if not detail:
+            detail = (completed.stderr or completed.stdout or "未知错误").strip()[-2000:]
+        return {"ok": False, "error": detail}
+    refresh_check = read_json(REFRESH_CHECK_PATH, {}) or {}
+    return {
+        "ok": True,
+        "status": refresh_check.get("status") or "ready",
+        "warnings": refresh_check.get("warnings") or [],
+        "data": load_dashboard(),
+    }
 
 
 # ============================================================

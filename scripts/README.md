@@ -48,6 +48,25 @@ python scripts/console_server.py --port 9000
 python scripts/launch_console.py
 ```
 
+### refresh_data.py — 刷新总入口
+
+页面“刷新”按钮调用的完整链路。模拟模式重建当天模拟数据；个人模式依次执行服务器拉取、规范化、契约校验、紧凑看板、归因分析和日报生成。
+
+```powershell
+python scripts/refresh_data.py
+```
+
+任一步返回失败码时停止后续步骤，并把原因写入 `{DATA_ROOT}/dashboard-normalized/latest_refresh_check.json`。
+
+### sync_server_data.py — 服务器数据拉取
+
+读取被 Git 忽略的 `config.json` 中的 `server_sync` 配置，通过本机 SSH 拉取服务器最近变更的文件并合并到个人数据区。首次同步使用较长时间窗口，日常刷新默认只同步最近 3 天；仓库不保存服务器地址、密钥或个人远端路径。
+
+```powershell
+python scripts/sync_server_data.py --dry-run
+python scripts/sync_server_data.py
+```
+
 ### daily_pipeline.py — 每日流水线
 
 读取 dashboard 数据和校验结果，生成日报 Markdown、运行 JSON 记录。
@@ -125,6 +144,8 @@ node scripts/capture_console_screenshot.js http://127.0.0.1:8765/ output.png
 ## 数据处理流程
 
 ```
+已配置服务器 → sync_server_data.py
+                         ↓
 各平台创作者后台导出 → 按目录约定存放 → normalize-self-media-dashboard.py
                                               ↓
                                     dashboard-normalized/ (7个标准文件)

@@ -13,6 +13,23 @@
       "revenue": 30000
     }
   },
+  "server_sync": {
+    "enabled": false,
+    "host": "你的SSH用户名@你的服务器地址",
+    "identity_file": "",
+    "connect_timeout": 20,
+    "transfer_timeout": 600,
+    "lookback_days": 3,
+    "initial_lookback_days": 90,
+    "max_age_days": 1,
+    "targets": [
+      {
+        "name": "小红书内容",
+        "remote": "/服务器上的数据目录/xhs_creator",
+        "local": "小红书内容数据/服务器同步"
+      }
+    ]
+  },
   "ai_api_url": "",
   "ai_api_key": "",
   "ai_model": "",
